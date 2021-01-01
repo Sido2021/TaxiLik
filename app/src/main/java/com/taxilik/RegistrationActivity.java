@@ -30,7 +30,7 @@ public class RegistrationActivity extends AppCompatActivity {
     String firstName ,lastName , phoneNumber , email,password,passwordConfirmation;
     ProgressDialog pdDialog;
     String URL_REGISTER = "https://omega-store.000webhostapp.com/register.php";
-    int count = 0 ;
+    int count = 1 ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
