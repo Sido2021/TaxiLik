@@ -31,6 +31,7 @@ public class RegistrationActivity extends AppCompatActivity {
     ProgressDialog pdDialog;
     String URL_REGISTER = "https://omega-store.000webhostapp.com/register.php";
     int count = 1 ;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,9 +40,9 @@ public class RegistrationActivity extends AppCompatActivity {
         editTextFirstName = findViewById(R.id.edit_text_first_name);
         editTextLastName = findViewById(R.id.edit_text_last_name);
         editTextPhoneNumber = findViewById(R.id.edit_text_phone_number);
-        editTextEmail=findViewById(R.id.edit_text_email_register);
-        editTextPassword=findViewById(R.id.edit_text_password_register);
-        editTextPasswordConfirmation=findViewById(R.id.edit_text_password_confirmation_register);
+        editTextEmail = findViewById(R.id.edit_text_email_register);
+        editTextPassword = findViewById(R.id.edit_text_password_register);
+        editTextPasswordConfirmation = findViewById(R.id.edit_text_password_confirmation_register);
 
         buttonSignUp =findViewById(R.id.button_sign_up);
 
