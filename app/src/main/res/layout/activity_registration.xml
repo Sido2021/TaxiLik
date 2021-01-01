@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/colorAccent"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_white_transparent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingLeft="20dp"
+        android:paddingTop="80dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <EditText
+            android:id="@+id/edit_text_first_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="First Name"
+            android:background="@drawable/background_text_white"
+            android:padding="8dp"
+            />
+        <EditText
+            android:id="@+id/edit_text_last_name"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="Last Name"
+            android:background="@drawable/background_text_white"
+            android:padding="8dp"
+            />
+        <EditText
+            android:id="@+id/edit_text_phone_number"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:minWidth="200dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:hint="Phone Number"
+            android:background="@drawable/background_text_white"
+            android:padding="8dp"
+            />
+        <EditText
+        android:id="@+id/edit_text_email_register"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+            android:background="@drawable/background_text_white"
+        android:hint="Email"
+            android:padding="8dp"/>
+    <EditText
+        android:id="@+id/edit_text_password_register"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:minWidth="250dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="Password"
+        android:background="@drawable/background_text_white"
+        android:padding="8dp"
+        />
+    <EditText
+        android:id="@+id/edit_text_password_confirmation_register"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:minWidth="200dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:hint="Confirm Password"
+        android:background="@drawable/background_text_white"
+        android:padding="8dp"
+        />
+
+    <Button
+        android:id="@+id/button_sign_up"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/white"
+        android:text="Sign up"/>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
