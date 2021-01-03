@@ -28,6 +28,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
 
+    String hello ;
     String URL_LOGIN = "https://omega-store.000webhostapp.com/login3.php";
     EditText editTextEmail,editTextPassword;
     Button loginButton;
