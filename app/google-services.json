@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "401485674784",
+    "project_id": "taxilik",
+    "storage_bucket": "taxilik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:401485674784:android:065e1ca912b224ef803f45",
+        "android_client_info": {
+          "package_name": "com.taxilik"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "401485674784-5hc2ahfburmnthsbpt33hal7o9q1qm5s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc-EJRTBJ8AnKdOpwyktnS6a06LMWUZAY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "401485674784-5hc2ahfburmnthsbpt33hal7o9q1qm5s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

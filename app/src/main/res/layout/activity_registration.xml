@@ -14,9 +14,9 @@
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingTop="80dp"
+        android:paddingTop="20dp"
         android:paddingRight="20dp"
-        android:paddingBottom="80dp"
+        android:paddingBottom="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
 
         <EditText
             android:id="@+id/edit_text_first_name"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:minWidth="200dp"
             android:layout_marginTop="8dp"
@@ -32,11 +32,11 @@
             android:layout_marginRight="8dp"
             android:hint="First Name"
             android:background="@drawable/background_text_white"
-            android:padding="8dp"
+            android:padding="4dp"
             />
         <EditText
             android:id="@+id/edit_text_last_name"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:minWidth="200dp"
             android:layout_marginTop="8dp"
@@ -44,11 +44,11 @@
             android:layout_marginRight="8dp"
             android:hint="Last Name"
             android:background="@drawable/background_text_white"
-            android:padding="8dp"
+            android:padding="4dp"
             />
         <EditText
             android:id="@+id/edit_text_phone_number"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:minWidth="200dp"
             android:layout_marginTop="8dp"
@@ -56,21 +56,21 @@
             android:layout_marginRight="8dp"
             android:hint="Phone Number"
             android:background="@drawable/background_text_white"
-            android:padding="8dp"
+            android:padding="4dp"
             />
         <EditText
         android:id="@+id/edit_text_email_register"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-            android:background="@drawable/background_text_white"
+        android:background="@drawable/background_text_white"
         android:hint="Email"
-            android:padding="8dp"/>
+        android:padding="4dp"/>
     <EditText
         android:id="@+id/edit_text_password_register"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:minWidth="250dp"
         android:layout_marginTop="8dp"
@@ -78,11 +78,11 @@
         android:layout_marginRight="8dp"
         android:hint="Password"
         android:background="@drawable/background_text_white"
-        android:padding="8dp"
+        android:padding="4dp"
         />
     <EditText
         android:id="@+id/edit_text_password_confirmation_register"
-        android:layout_width="250dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:minWidth="200dp"
         android:layout_marginTop="8dp"
@@ -90,12 +90,11 @@
         android:layout_marginRight="8dp"
         android:hint="Confirm Password"
         android:background="@drawable/background_text_white"
-        android:padding="8dp"
+        android:padding="4dp"
         />
 
     <Button
         android:id="@+id/button_sign_up"
-        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -103,6 +102,7 @@
         android:layout_marginRight="8dp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
+        android:background="@drawable/background_button_purple"
         android:text="Sign up"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

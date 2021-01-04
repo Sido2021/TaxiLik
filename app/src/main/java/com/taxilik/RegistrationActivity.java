@@ -71,6 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         });
     }
+
     private void Register()
     {
         pdDialog.show();

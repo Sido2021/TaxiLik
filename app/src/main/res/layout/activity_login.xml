@@ -8,8 +8,8 @@
     android:background="@color/colorPrimary">
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:src="@drawable/icon2"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
@@ -23,10 +23,11 @@
         android:background="@drawable/background_white_transparent"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingTop="80dp"
-        android:paddingRight="20dp"
-        android:paddingBottom="80dp"
+        android:paddingLeft="4dp"
+        android:paddingTop="10dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="10dp"
+        android:layout_margin="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,8 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
         android:background="@drawable/background_text_white"
         android:orientation="horizontal">
         <ImageView
@@ -47,7 +48,7 @@
             android:src="@drawable/ic_user_gray" />
         <EditText
             android:id="@+id/edit_text_email"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:background="@android:color/transparent"
@@ -58,9 +59,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="4dp"
         android:background="@drawable/background_text_white"
         android:orientation="horizontal">
         <ImageView
@@ -70,7 +71,7 @@
             android:padding="4dp"/>
         <EditText
             android:id="@+id/edit_text_password"
-            android:layout_width="250dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:hint="Password"
@@ -81,7 +82,7 @@
 
         <Button
             android:id="@+id/button_login"
-            android:layout_width="300dp"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
@@ -90,7 +91,7 @@
             android:text="Login" />
 
         <TextView
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="40dp"

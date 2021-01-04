@@ -2,7 +2,12 @@ package com.taxilik;
 
 import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -28,6 +34,10 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Circle;
+import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -80,14 +90,13 @@ public class MapsFragment extends Fragment {
         }
 
 
-
     }
     private void fetchLastLocation() {
         if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(getActivity(),new String[]{Manifest.permission.ACCESS_FINE_LOCATION},REQUEST_CODE);
             return;
         }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+        final Task<Location> task = fusedLocationProviderClient.getLastLocation();
         task.addOnSuccessListener(new OnSuccessListener<Location>() {
             @Override
             public void onSuccess(Location location) {
@@ -98,11 +107,37 @@ public class MapsFragment extends Fragment {
                     LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
 
-                    map.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-                    map.animateCamera(CameraUpdateFactory.newLatLngBounds(new LatLngBounds(latLng,latLng),12));
+                    //map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     map.addMarker(markerOptions);
 
+                    Circle circle = map.addCircle(new CircleOptions()
+                            .center(new LatLng(latLng.latitude, latLng.longitude))
+                            .radius(500).strokeWidth(2)
+                            .strokeColor(Color.BLUE)
+                            .fillColor(0x3f0000ff));
+
+
+                    //test location 34.402108422360705, -2.8970004531777307
+
+                    currentLocation.setLatitude(34.402108422360705);
+                    currentLocation.setLongitude(-2.8970004531777307);
+
+                    latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
+                    markerOptions = new MarkerOptions().position(latLng).title("My Test Location");
+
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                    map.addMarker(markerOptions);
+
+                    map.addCircle(new CircleOptions()
+                            .center(new LatLng(latLng.latitude, latLng.longitude))
+                            .radius(500).strokeWidth(2)
+                            .strokeColor(Color.BLUE)
+                            .fillColor(0x3f0000ff));
+
                     loadNearCars();
+                }
+                else {
+                    Toast.makeText(getContext(), task.getException()+"", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -129,6 +164,8 @@ public class MapsFragment extends Fragment {
 
                                     LatLng latLng = new LatLng(Double.parseDouble(car.getString("latitude")),Double.parseDouble(car.getString("longitude")));
                                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("car :"+car.getString("car_id"));
+                                    markerOptions.icon(bitmapDescriptorFromVector(getContext(),R.drawable.ic_car_gold));
+
                                     map.addMarker(markerOptions);
                                 }
                             }
@@ -172,5 +209,13 @@ public class MapsFragment extends Fragment {
                 break ;
             }
         }
+    }
+    private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
+        Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
+        vectorDrawable.setBounds(0, 0, vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight());
+        Bitmap bitmap = Bitmap.createBitmap(vectorDrawable.getIntrinsicWidth(), vectorDrawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        vectorDrawable.draw(canvas);
+        return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 }

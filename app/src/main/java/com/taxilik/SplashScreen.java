@@ -23,11 +23,11 @@ public class SplashScreen extends AppCompatActivity {
         is_signed_in = mPreferences.getString("issignedin","false");
         if(is_signed_in.equals("true"))
         {
-            Intent i = new Intent(this,LoginActivity.class);
+            Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }
         else {
-            Intent i = new Intent(this,LoginActivity.class);
+            Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }
 
