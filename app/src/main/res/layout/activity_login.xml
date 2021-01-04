@@ -10,7 +10,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/icon2"
+        android:src="@drawable/icon2"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -33,37 +33,71 @@
         app:layout_constraintTop_toTopOf="parent">
 
 
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/background_text_white"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_user_gray" />
         <EditText
             android:id="@+id/edit_text_email"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/background_text_white"
+            android:gravity="center_vertical"
+            android:background="@android:color/transparent"
             android:hint="Email"
             android:padding="8dp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/background_text_white"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:src="@drawable/ic_lock_open_gray"
+            android:padding="4dp"/>
         <EditText
             android:id="@+id/edit_text_password"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:background="@drawable/background_text_white"
+            android:background="@android:color/transparent"
             android:hint="Password"
+            android:inputType="textPassword"
             android:minWidth="200dp"
             android:padding="8dp" />
+    </LinearLayout>
+
         <Button
             android:id="@+id/button_login"
-            style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="8dp"
+            android:background="@drawable/background_button_gold"
             android:text="Login" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginRight="8dp"
+            android:gravity="center"
+            android:textColor="@android:color/white"
+            android:text="Do you forget password ?" />
 
     </LinearLayout>
 
