@@ -6,28 +6,26 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-public class SplashScreen extends AppCompatActivity {
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
-    String is_signed_in="";
-    SharedPreferences mPreferences;
-    String sharedprofFile="com.protocoderspoint.registration_login";
-    SharedPreferences.Editor preferencesEditor;
+public class SplashScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        mPreferences=getSharedPreferences(sharedprofFile,MODE_PRIVATE);
-        preferencesEditor = mPreferences.edit();
-        is_signed_in = mPreferences.getString("issignedin","false");
-        if(is_signed_in.equals("true"))
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if(currentUser!=null)
         {
             Intent i = new Intent(this,MainActivity.class);
             startActivity(i);
         }
         else {
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent(this,LoginActivity2.class);
             startActivity(i);
         }
 

@@ -25,9 +25,7 @@ public class LoginActivity2 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText editTextEmail,editTextPassword;
     Button loginButton;
-
     TextView registerNow;
-
     ProgressDialog pdDialog;
 
     @Override
@@ -76,12 +74,16 @@ public class LoginActivity2 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-
-                            Intent login = new Intent(LoginActivity2.this,MainActivity.class);
-                            startActivity(login);
-                            finish();
-
+                            if(user.isEmailVerified()){
+                                Intent login = new Intent(LoginActivity2.this,MainActivity.class);
+                                startActivity(login);
+                                finish();
+                            }
+                            else {
+                                Toast.makeText(LoginActivity2.this, "Please verify your email !",
+                                        Toast.LENGTH_SHORT).show();
+                                mAuth.signOut();
+                            }
                         } else {
                             Toast.makeText(LoginActivity2.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
@@ -121,28 +123,6 @@ public class LoginActivity2 extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         hideProgressBar();
-        /*if (user != null) {
-            mBinding.status.setText(getString(R.string.emailpassword_status_fmt,
-                    user.getEmail(), user.isEmailVerified()));
-            mBinding.detail.setText(getString(R.string.firebase_status_fmt, user.getUid()));
-
-            mBinding.emailPasswordButtons.setVisibility(View.GONE);
-            mBinding.emailPasswordFields.setVisibility(View.GONE);
-            mBinding.signedInButtons.setVisibility(View.VISIBLE);
-
-            if (user.isEmailVerified()) {
-                mBinding.verifyEmailButton.setVisibility(View.GONE);
-            } else {
-                mBinding.verifyEmailButton.setVisibility(View.VISIBLE);
-            }
-        } else {
-            mBinding.status.setText(R.string.signed_out);
-            mBinding.detail.setText(null);
-
-            mBinding.emailPasswordButtons.setVisibility(View.VISIBLE);
-            mBinding.emailPasswordFields.setVisibility(View.VISIBLE);
-            mBinding.signedInButtons.setVisibility(View.GONE);
-        }*/
     }
 
     private void hideProgressBar() {
@@ -152,7 +132,6 @@ public class LoginActivity2 extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
     }

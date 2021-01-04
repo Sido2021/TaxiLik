@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -71,13 +72,11 @@ public class RegisterActivity2 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
-                            Toast.makeText(RegisterActivity2.this, "user created !", Toast.LENGTH_SHORT).show();
+                            sendVerificationEmail(user);
                             Intent login = new Intent(RegisterActivity2.this,LoginActivity2.class);
                             startActivity(login);
                             finish();
                         } else {
-                            updateUI(null);
                             Toast.makeText(RegisterActivity2.this, "non", Toast.LENGTH_SHORT).show();
                         }
                         task.addOnFailureListener(new OnFailureListener() {
@@ -98,10 +97,6 @@ public class RegisterActivity2 extends AppCompatActivity {
     private void hideProgressBar() {
         pdDialog.hide();
     }
-    private void updateUI(Object o) {
-
-    }
-
     private boolean validateForm() {
         boolean valid = true;
 
@@ -152,12 +147,29 @@ public class RegisterActivity2 extends AppCompatActivity {
 
 
         if (!password.equals(password2)) {
-            editTextPasswordConfirmation.setError("comfirmation failed!");
+            editTextPasswordConfirmation.setError("confirmation failed!");
             valid = false;
         } else {
             editTextPasswordConfirmation.setError(null);
         }
 
         return valid;
+    }
+    
+    private void sendVerificationEmail(final FirebaseUser user){
+        user.sendEmailVerification().addOnCompleteListener(this, new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegisterActivity2.this,
+                                "Verification email sent to " + user.getEmail(),
+                                Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(RegisterActivity2.this,
+                                "Failed to send verification email.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+        });
     }
 }
