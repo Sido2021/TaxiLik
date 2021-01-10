@@ -28,6 +28,8 @@ public class LoginActivity2 extends AppCompatActivity {
     TextView registerNow;
     ProgressDialog pdDialog;
     EditText deletedTestVar2;
+    TextView BvText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
