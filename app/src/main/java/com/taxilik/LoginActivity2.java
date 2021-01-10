@@ -27,7 +27,7 @@ public class LoginActivity2 extends AppCompatActivity {
     Button loginButton;
     TextView registerNow;
     ProgressDialog pdDialog;
-    EditText deletedTestVar;
+    EditText deletedTestVar2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
