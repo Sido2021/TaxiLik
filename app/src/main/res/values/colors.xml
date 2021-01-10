@@ -7,4 +7,5 @@
     <color name="colorPrimaryTransparent">#7F32325B</color>
     <color name="colorPrimaryDarkTransparent">#7F3700B3</color>
     <color name="colorAccentTransparent">#7FFFAB00</color>
+    <color name="white">#fff</color>
 </resources>
