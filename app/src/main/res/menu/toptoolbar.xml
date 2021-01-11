@@ -4,7 +4,7 @@
     <item
         android:id="@+id/partager"
         android:title="partager"
-        app:titleTextColor="@color/OrandeTaxi"
+        app:titleTextColor="@color/black"
         />
 
     <item
