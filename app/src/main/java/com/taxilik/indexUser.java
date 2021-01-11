@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class indexUser extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +26,22 @@ public class indexUser extends AppCompatActivity {
         // header
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        //listView
+        ListView listTxi=(ListView) findViewById(R.id.listViewTaxi);
+
+        CarsDipo cars1 =new CarsDipo("icon2","chaimae taj","mat:23565356");
+        CarsDipo cars2 =new CarsDipo("icon2","hello hello","mat:23556");
+        CarsDipo cars3 =new CarsDipo("icon2","chaimae taj","mat:235454556");
+        CarsDipo cars4 =new CarsDipo("icon2","hello hello","mat:23565356");
+        CarsDipo cars5 =new CarsDipo("icon2","chaimae taj","mat:23565356");
+        CarsDipo cars6 =new CarsDipo("icon2","chaimae taj","mat:23565356");
+        CarsDipo[] listcars={cars1,cars2,cars3,cars4,cars5,cars6};
+        //intialise wmlfile
+        int xmlFile=R.layout.car_list;
+        //call adapter
+        TaxiAdapter adapter=new TaxiAdapter(indexUser.this,xmlFile,listcars);
+        listTxi.setAdapter(adapter);
+
     }
 
 

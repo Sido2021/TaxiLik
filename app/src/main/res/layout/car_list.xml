@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp"
+    android:layout_marginBottom="13dp"
+    android:background="@color/lightgray"
+    >
+
+    <ImageView
+        android:id="@+id/imageXML"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:srcCompat="@drawable/icon2"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/chauffxml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chauffeur name"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginLeft="7dp"
+            android:textSize="18dp"
+            />
+
+        <TextView
+            android:id="@+id/matxml"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="mat:35462"
+             android:layout_marginLeft="7dp"
+
+            android:textColor="@color/OrandeTaxi"
+            />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
