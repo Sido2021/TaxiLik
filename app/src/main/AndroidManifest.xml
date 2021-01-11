@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.taxilik">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/icon2"
@@ -9,7 +13,8 @@
         android:roundIcon="@drawable/icon2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".RegisterActivity2"></activity>
+        <activity android:name=".indexUser"></activity>
+        <activity android:name=".RegisterActivity2" />
         <activity android:name=".LoginActivity2" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -28,8 +33,5 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
 </manifest>

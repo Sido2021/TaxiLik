@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/partager"
+        android:title="partager"
+        app:titleTextColor="@color/OrandeTaxi"
+        />
+
+    <item
+        android:id="@+id/about"
+        android:title="Apropos"
+        app:titleTextColor="@color/black"
+        />
+    <item
+        android:id="@+id/exit"
+        android:title="quitter"
+        app:titleTextColor="@color/black"/>
+
+    <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="Recherche"
+        app:showAsAction="always"/>
+</menu>
