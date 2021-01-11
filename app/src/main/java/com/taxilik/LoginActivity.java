@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         is_signed_in = mPreferences.getString("issignedin","false");
         if(is_signed_in.equals("true"))
         {
-            Intent i = new Intent(LoginActivity.this,MainActivity.class);
+            Intent i = new Intent(LoginActivity.this,ClientActivity.class);
             startActivity(i);
             finish();
         }
@@ -105,7 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                                 preferencesEditor.putString("SignedInUserID",id);
 
                                 preferencesEditor.apply();
-                                Intent i = new Intent(LoginActivity.this,MainActivity.class);
+                                Intent i = new Intent(LoginActivity.this,ClientActivity.class);
                                 startActivity(i);
                                 finish();
                             }

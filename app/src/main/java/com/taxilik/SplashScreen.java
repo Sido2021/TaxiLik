@@ -2,9 +2,11 @@ package com.taxilik;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -16,19 +18,26 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash_screen);
 
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(isNetworkConnected() ){
+            FirebaseAuth mAuth = FirebaseAuth.getInstance();
+            FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        if(currentUser!=null)
-        {
-            Intent i = new Intent(this,MainActivity.class);
+            Intent i = new Intent();
+
+            if(currentUser!=null)i.setClass(this,ClientActivity.class);
+            else i.setClass(this,LoginActivity2.class);
+
             startActivity(i);
+            finish();
         }
         else {
-            Intent i = new Intent(this,LoginActivity2.class);
-            startActivity(i);
+            Toast.makeText(this, "Please check your connection !", Toast.LENGTH_SHORT).show();
         }
+    }
 
-        finish();
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 }

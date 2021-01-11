@@ -1,18 +1,19 @@
 package com.taxilik;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,10 +27,11 @@ public class LoginActivity2 extends AppCompatActivity {
     EditText editTextEmail,editTextPassword;
     Button loginButton;
     TextView registerNow;
+    ImageView showHidePasswordImageView ;
     ProgressDialog pdDialog;
-    EditText deletedTestVar2;
-    TextView BvText;
 
+
+    boolean passwordVisible = false ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,7 @@ public class LoginActivity2 extends AppCompatActivity {
         editTextEmail =  findViewById(R.id.edit_text_email);
         editTextPassword = findViewById(R.id.edit_text_password);
         loginButton=findViewById(R.id.button_login);
+        showHidePasswordImageView = findViewById(R.id.show_hide_password);
 
         pdDialog= new ProgressDialog(LoginActivity2.this);
         pdDialog.setTitle("Login please wait...");
@@ -62,6 +65,35 @@ public class LoginActivity2 extends AppCompatActivity {
                 startActivity(register);
             }
         });
+
+        editTextPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(b){
+                    showHidePasswordImageView.setVisibility(View.VISIBLE);
+                }
+                else{
+                    showHidePasswordImageView.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        showHidePasswordImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(passwordVisible) {
+                    showHidePasswordImageView.setImageResource(R.drawable.ic_visible_on);
+                    editTextPassword.setTransformationMethod(new PasswordTransformationMethod());
+                    passwordVisible=false;
+                }
+                else {
+                    showHidePasswordImageView.setImageResource(R.drawable.ic_visible_off);
+                    editTextPassword.setTransformationMethod(null);
+                    passwordVisible=true;
+                }
+                editTextPassword.setSelection(editTextPassword.getText().length());
+            }
+        });
     }
 
     private void signIn(String email, String password) {
@@ -77,8 +109,9 @@ public class LoginActivity2 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            assert user != null;
                             if(user.isEmailVerified()){
-                                Intent login = new Intent(LoginActivity2.this,MainActivity.class);
+                                Intent login = new Intent(LoginActivity2.this,ClientActivity.class);
                                 startActivity(login);
                                 finish();
                             }
@@ -90,7 +123,7 @@ public class LoginActivity2 extends AppCompatActivity {
                         } else {
                             Toast.makeText(LoginActivity2.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI();
                         }
                         hideProgressBar();
                     }
@@ -124,7 +157,7 @@ public class LoginActivity2 extends AppCompatActivity {
         pdDialog.show();
     }
 
-    private void updateUI(FirebaseUser user) {
+    private void updateUI() {
         hideProgressBar();
     }
 
@@ -136,6 +169,6 @@ public class LoginActivity2 extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
+        updateUI();
     }
 }

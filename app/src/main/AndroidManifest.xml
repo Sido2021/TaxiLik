@@ -13,8 +13,12 @@
         android:roundIcon="@drawable/icon2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".indexUser"></activity>
+        <activity
+            android:name=".ClientActivity"
+            android:label="@string/title_activity_client"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity2" />
+        <activity android:name=".indexUser"></activity>
         <activity android:name=".LoginActivity2" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -26,7 +30,6 @@
         <activity
             android:name=".RegistrationActivity"
             android:theme="@style/AppTheme2" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".LoginActivity" />
 
         <meta-data
