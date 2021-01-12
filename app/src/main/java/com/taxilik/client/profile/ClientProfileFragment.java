@@ -40,12 +40,7 @@ public class ClientProfileFragment extends AppCompatActivity {
         lname_prof=findViewById(R.id.lname_prof);
         email_prof=findViewById(R.id.email_prof);
         phone_prof=findViewById(R.id.phone_prof);
-//        fullname_field=findViewById(R.id.fullname_field);
-//        username_field=findViewById(R.id.username_field);
-//        full_name_profile=findViewById(R.id.full_name_profile);
-//        email_profile=findViewById(R.id.email_profile);
-//        phone_profile=findViewById(R.id.phone_profile);
-//        password_profile=findViewById(R.id.password_profile);
+
         edit_profile=findViewById(R.id.edit_profile);
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
