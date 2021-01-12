@@ -152,167 +152,82 @@
                 android:orientation="vertical"
                 android:padding="20dp">
 
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
+                    android:hint="First Name"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_person"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="First Name"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:layout_marginLeft="5dp"/>
-                    <TextView
-                        android:id="@+id/fname_prof"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="YASSINE"
-                        android:layout_marginLeft="25dp"
-                        android:textStyle="bold"
-                        android:textSize="18dp"
-                        android:textColor="@android:color/black"/>
-                </LinearLayout>
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    />
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:drawableLeft="@drawable/ic_person"
+                        android:id="@+id/fname_profile"
+                        android:drawablePadding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="YASSINE"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
+                    android:hint="First Name"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_person"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Last Name"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:layout_marginLeft="5dp"/>
-                    <TextView
-                        android:id="@+id/lname_prof"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MEROUANE"
-                        android:textStyle="bold"
-                        android:layout_marginLeft="25dp"
-                        android:textSize="18dp"
-                        android:textColor="@android:color/black"/>
-
-
-
-                </LinearLayout>
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    />
+                    android:layout_marginBottom="10dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:drawableLeft="@drawable/ic_person"
+                        android:id="@+id/lname_profile"
+                        android:drawablePadding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="MEROUANE"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
+                    android:hint="Email"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_email"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:layout_marginLeft="5dp"/>
-
-                    <TextView
-                        android:layout_width="245dp"
-                        android:id="@+id/email_prof"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dp"
-                        android:text="merouaneyassin@gmail.com"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-                <LinearLayout
                     android:layout_width="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:drawableLeft="@drawable/ic_email"
+                        android:id="@+id/email_profile"
+                        android:drawablePadding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="merouaneyassin@gmail.com"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    app:boxBackgroundColor="@android:color/transparent"
+                    android:background="@android:color/transparent"
+                    android:hint="Phone Number"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_gravity="center_vertical">
-                    <ImageView
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:src="@drawable/ic_phone"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Email"
-                        android:textColor="@color/black"
-                        android:textSize="20dp"
-                        android:layout_marginLeft="5dp"/>
-
-                    <TextView
-                        android:id="@+id/phone_prof"
-                        android:layout_width="245dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="25dp"
-                        android:text="+212 643427501"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
-
-
-                </LinearLayout>
-
-                <View
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:background="@android:color/darker_gray"
-                    android:layout_marginTop="10dp"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"
-                    />
+                    android:layout_marginBottom="10dp">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:drawableLeft="@drawable/ic_phone"
+                        android:id="@+id/phone_profile"
+                        android:drawablePadding="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="+212 643427501"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/edit_profile"
                     android:background="#fece2f"
+                    android:id="@+id/update"
                     android:fontFamily="@font/bungee"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:layout_width="match_parent"
-                    android:text="Edit Profile" />
+                    android:text="UPDATE" />
 
             </LinearLayout>
         </LinearLayout>
