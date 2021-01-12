@@ -47,7 +47,7 @@ public class TaxiAdapter extends ArrayAdapter {
         CarsDipo taxiposition=taxi[position];
         //put value in each item
         txtName.setText(taxiposition.drivername);
-        txtName.setText(taxiposition.matDisc);
+        txtMat.setText(taxiposition.matDisc);
         int imgId=activityAdapter.getResources().getIdentifier(taxiposition.image,"drawable",activityAdapter.getPackageName());
         txtImage.setImageResource(imgId);
 

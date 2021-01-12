@@ -7,19 +7,19 @@
     android:orientation="horizontal"
     android:padding="16dp"
     android:layout_marginBottom="13dp"
-    android:background="@color/lightgray"
+    android:background="@color/white"
     >
 
     <ImageView
         android:id="@+id/imageXML"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         app:srcCompat="@drawable/icon2"
         />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
@@ -28,9 +28,9 @@
             android:layout_height="wrap_content"
             android:text="Chauffeur name"
             android:textColor="@color/black"
-            android:textStyle="bold"
+
             android:layout_marginLeft="7dp"
-            android:textSize="18dp"
+            android:textSize="16dp"
             />
 
         <TextView
@@ -40,7 +40,7 @@
             android:text="mat:35462"
              android:layout_marginLeft="7dp"
 
-            android:textColor="@color/OrandeTaxi"
+            android:textColor="@color/colorPrimaryTransparent"
             />
 
 
