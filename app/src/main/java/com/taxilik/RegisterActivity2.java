@@ -13,12 +13,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity2 extends AppCompatActivity {
 
@@ -29,6 +40,8 @@ public class RegisterActivity2 extends AppCompatActivity {
     ProgressDialog pdDialog;
 
     private FirebaseAuth mAuth;
+
+    String URL_REGISTER = "https://omega-store.000webhostapp.com/register.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -72,10 +85,8 @@ public class RegisterActivity2 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Register(user.getUid());
                             sendVerificationEmail(user);
-                            Intent login = new Intent(RegisterActivity2.this,LoginActivity2.class);
-                            startActivity(login);
-                            finish();
                         } else {
                             Toast.makeText(RegisterActivity2.this, "non", Toast.LENGTH_SHORT).show();
                         }
@@ -171,5 +182,61 @@ public class RegisterActivity2 extends AppCompatActivity {
                     }
                 }
         });
+    }
+
+    private void Register(final String id)
+    {
+        pdDialog.show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("anyText",response);
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+                            String message = jsonObject.getString("message");
+
+                            if(success.equals("1")){
+                                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                                pdDialog.dismiss();
+                                Intent login = new Intent(RegisterActivity2.this,LoginActivity.class);
+                                startActivity(login);
+                                finish();
+                            }
+                            if(success.equals("2")){
+                                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                                pdDialog.dismiss();
+                            }
+                            if(success.equals("3")){
+                                Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
+                                pdDialog.dismiss();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),"Registration Error !1"+e,Toast.LENGTH_LONG).show();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pdDialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Registration Error !2"+error,Toast.LENGTH_LONG).show();
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<>();
+                params.put("id",id);
+                params.put("first_name",editTextFirstName.getText().toString());
+                params.put("last_name",editTextLastName.getText().toString());
+                params.put("phone",editTextPhoneNumber.getText().toString());
+                params.put("type","1");
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }

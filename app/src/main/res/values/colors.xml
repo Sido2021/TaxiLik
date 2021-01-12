@@ -12,4 +12,8 @@
     <color name="white">#fff</color>
     <color name="black">#000000</color>
     <color name="OrandeTaxi">#fb9403</color>
+
+
+    <!-- help color-->
+    <color name="Green">#43A047</color>
 </resources>

@@ -1,5 +1,11 @@
 package com.taxilik;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,34 +16,28 @@ import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
 import com.taxilik.client.home.ClientHomeFragment;
-import com.taxilik.client.home.offre.ClientOffreFragment;
-import com.taxilik.client.profile.ClientProfileFragment;
 import com.taxilik.driver.home.DriverHomeFragment;
 
-import androidx.annotation.NonNull;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-public class ClientActivity extends AppCompatActivity implements ClientHomeFragment.OnFragmentInteractionListener
-  , ClientOffreFragment.OnFragmentInteractionListener,ClientProfileFragment.OnFragmentInteractionListener{
+public class DriverActivity extends AppCompatActivity implements DriverHomeFragment.OnFragmentInteractionListener {
 
     ImageView menuDrawer ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_driver);
+
+
         setContentView(R.layout.activity_client);
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.parent_fragment_container, new ClientHomeFragment());
+        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
         ft.commit();
 
         menuDrawer = findViewById(R.id.menu_drawer);
@@ -48,9 +48,6 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
             }
         });
 
-
-        NavigationView navigationView = findViewById(R.id.nav_view);
-
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,22 +55,22 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
                 FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                 switch (item.getItemId()){
                     case R.id.nav_home :{
-                        ft.replace(R.id.parent_fragment_container, new ClientHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
                         break;
                     }
                     case R.id.nav_profile :{
 
-                        ft.replace(R.id.parent_fragment_container, new ClientProfileFragment());
+                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
                         break;
                     }
                     case R.id.nav_settings :{
 
-                        //ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
                         break;
                     }
                     case R.id.nav_about:{
 
-                        //ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
                         break;
                     }
                 }
@@ -83,8 +80,6 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
             }
         });
     }
-
-
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -105,11 +100,6 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
 
     @Override
     public void messageFromParentFragment(Uri uri) {
-
-    }
-
-    @Override
-    public void messageFromChildFragment(Uri uri) {
 
     }
 }

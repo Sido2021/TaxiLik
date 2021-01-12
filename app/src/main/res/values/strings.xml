@@ -21,4 +21,7 @@
     <string name="offre">Offre</string>
     <string name="map">Map</string>
     <string name="history">History</string>
+    <string name="profile">Profile</string>
+    <string name="settings">Settings</string>
+    <string name="about">About</string>
 </resources>

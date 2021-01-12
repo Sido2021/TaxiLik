@@ -10,7 +10,6 @@ public class CarsDipo {
         this.drivername=drivername;
         this.image=image;
         this.matDisc=matDisc;
-
     }
 
 

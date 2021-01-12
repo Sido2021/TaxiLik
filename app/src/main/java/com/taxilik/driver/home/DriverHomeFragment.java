@@ -1,4 +1,4 @@
-package com.taxilik.client.home;
+package com.taxilik.driver.home;
 
 import android.content.Context;
 import android.net.Uri;
@@ -16,28 +16,27 @@ import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.taxilik.R;
-import com.taxilik.client.home.history.ClientHistoryFragment;
-import com.taxilik.client.home.map.ClientMapFragment;
-import com.taxilik.client.home.offre.ClientOffreFragment;
+import com.taxilik.client.home.ClientHomeFragment;
+import com.taxilik.driver.home.history.DriverHistoryFragment;
+import com.taxilik.driver.home.map.DriverMapFragment;
+import com.taxilik.driver.home.request.DriverRequestFragment;
 
-public class ClientHomeFragment extends Fragment {
+public class DriverHomeFragment extends Fragment {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
+    private ClientHomeFragment.OnFragmentInteractionListener mListener;
+
     private String mParam1;
     private String mParam2;
 
-
-    private OnFragmentInteractionListener mListener;
-
-    public ClientHomeFragment() {
+    public DriverHomeFragment() {
         // Required empty public constructor
     }
 
-    public static ClientHomeFragment newInstance(String param1, String param2) {
-        ClientHomeFragment fragment = new ClientHomeFragment();
+    public static DriverHomeFragment newInstance(String param1, String param2) {
+        DriverHomeFragment fragment = new DriverHomeFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,14 +57,12 @@ public class ClientHomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_client_home, container, false);
+        return inflater.inflate(R.layout.fragment_driver_home, container, false);
     }
-
-
 
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable Bundle savedInstanceState) {
-        Fragment childFragment = new ClientOffreFragment();
+        Fragment childFragment = new DriverRequestFragment();
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
         transaction.replace(R.id.child_fragment_container, childFragment).commit();
         BottomNavigationView bottomNavigationView = view.findViewById(R.id.nav_view);
@@ -73,21 +70,22 @@ public class ClientHomeFragment extends Fragment {
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment childFragment = new ClientOffreFragment();
+                Fragment childFragment = new DriverRequestFragment();
                 switch (item.getItemId()){
                     case R.id.navigation_offre:
-                         childFragment = new ClientOffreFragment();
+                        childFragment = new DriverRequestFragment();
                         break;
 
                     case R.id.navigation_history:
-                        childFragment = new ClientHistoryFragment();
+                        childFragment = new DriverMapFragment();
                         break;
                     case R.id.navigation_map:
-                        childFragment = new ClientMapFragment();
+                        childFragment = new DriverHistoryFragment();
                         break;
                 }
                 FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
                 transaction.replace(R.id.child_fragment_container, childFragment).commit();
+                BottomNavigationView bottomNavigationView = view.findViewById(R.id.nav_view);
                 return true;
             }
         });
@@ -95,8 +93,8 @@ public class ClientHomeFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof ClientHomeFragment.OnFragmentInteractionListener) {
+            mListener = (ClientHomeFragment.OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");

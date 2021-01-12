@@ -11,20 +11,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public class TaxiAdapter extends ArrayAdapter {
     Context activityAdapter;
     int resource;
-    CarsDipo[] taxi;
+    ArrayList<CarsDipo> carsList;
 
 
 
-    public TaxiAdapter(@NonNull Context context, int resource, @NonNull CarsDipo[] objects) {
-        super(context, resource, objects);
+    public TaxiAdapter(@NonNull Context context, int resource, @NonNull ArrayList<CarsDipo> carsList) {
+        super(context, resource, carsList);
         activityAdapter=context;
         this.resource=resource;
-        taxi=objects;
+        this.carsList=carsList;
     }
 
 
@@ -41,19 +41,15 @@ public class TaxiAdapter extends ArrayAdapter {
         LayoutInflater rowinf=LayoutInflater.from(activityAdapter);
         row=rowinf.inflate(resource,parent,false);
 
-        TextView txtName=(TextView) row.findViewById(R.id.chauffxml);
-        TextView txtMat=(TextView) row.findViewById(R.id.matxml);
-        ImageView txtImage=(ImageView) row.findViewById(R.id.imageXML);
-        CarsDipo taxiposition=taxi[position];
-        //put value in each item
-        txtName.setText(taxiposition.drivername);
-        txtMat.setText(taxiposition.matDisc);
-        int imgId=activityAdapter.getResources().getIdentifier(taxiposition.image,"drawable",activityAdapter.getPackageName());
-        txtImage.setImageResource(imgId);
+        TextView txtName=row.findViewById(R.id.chauffxml);
+        TextView txtMat= row.findViewById(R.id.matxml);
+        ImageView txtImage=row.findViewById(R.id.imageXML);
 
 
+        txtName.setText(carsList.get(position).drivername);
+        txtMat.setText(carsList.get(position).matDisc);
+        //txtImage.setImageResource(dra);
 
-
-return row;
+        return row;
     }
 }

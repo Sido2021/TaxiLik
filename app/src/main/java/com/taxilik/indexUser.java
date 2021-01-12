@@ -39,8 +39,8 @@ public class indexUser extends AppCompatActivity {
         //intialise wmlfile
         int xmlFile=R.layout.car_list;
         //call adapter
-        TaxiAdapter adapter=new TaxiAdapter(indexUser.this,xmlFile,listcars);
-        listTxi.setAdapter(adapter);
+        //TaxiAdapter adapter=new TaxiAdapter(indexUser.this,xmlFile,listcars);
+        //listTxi.setAdapter(adapter);
 
     }
 

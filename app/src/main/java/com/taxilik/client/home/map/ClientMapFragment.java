@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,7 +63,9 @@ public class ClientMapFragment extends Fragment {
     String URL_GET_NEAR_CARS = "https://omega-store.000webhostapp.com/get_near_cars.php";
     ProgressDialog pdDialog;
 
+
     ArrayList<MarkerOptions> carsList = new ArrayList<>();
+    ArrayList<ArrayList<LatLng>> carsLocationForSimulation = new ArrayList<>();
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         @Override
@@ -72,12 +75,16 @@ public class ClientMapFragment extends Fragment {
         }
     };
 
+
+
+    Handler handler = new Handler();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+        return inflater.inflate(R.layout.fragment_client_map, container, false);
     }
 
     @Override
@@ -114,11 +121,11 @@ public class ClientMapFragment extends Fragment {
                     //map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     map.addMarker(markerOptions);
 
-                    Circle circle = map.addCircle(new CircleOptions()
+                    /*Circle circle = map.addCircle(new CircleOptions()
                             .center(new LatLng(latLng.latitude, latLng.longitude))
-                            .radius(500).strokeWidth(2)
+                            .radius(1000).strokeWidth(2)
                             .strokeColor(Color.BLUE)
-                            .fillColor(0x3f0000ff));
+                            .fillColor(0x3f0000ff));*/
 
 
                     //test location 34.402108422360705, -2.8970004531777307
@@ -134,7 +141,7 @@ public class ClientMapFragment extends Fragment {
 
                     map.addCircle(new CircleOptions()
                             .center(new LatLng(latLng.latitude, latLng.longitude))
-                            .radius(500).strokeWidth(2)
+                            .radius(1000).strokeWidth(2)
                             .strokeColor(Color.BLUE)
                             .fillColor(0x3f0000ff));
 
@@ -164,7 +171,7 @@ public class ClientMapFragment extends Fragment {
                             if(success.equals("0")){
                                 for(int i=0;i<carsArray.length();i++){
                                     JSONObject car = carsArray.getJSONObject(i);
-                                    Toast.makeText(getContext(),car.getString("car_id"),Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getContext(),car.getString("car_id") + " , "+ car.getString("distance"),Toast.LENGTH_LONG).show();
 
                                     LatLng latLng = new LatLng(Double.parseDouble(car.getString("latitude")),Double.parseDouble(car.getString("longitude")));
                                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("car :"+car.getString("car_id"));
@@ -179,6 +186,9 @@ public class ClientMapFragment extends Fragment {
                                     carsList.add(markerOptions);
                                     map.addMarker(markerOptions);
                                 }
+
+                                //startListining();
+
                             }
                             pdDialog.dismiss();
                         } catch (Exception e) {
@@ -198,9 +208,11 @@ public class ClientMapFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
+
+                //test location 34.402108422360705, -2.8970004531777307
                 params.put("city","Taourirt");
-                params.put("latitude",""+currentLocation.getLatitude());
-                params.put("longitude",""+currentLocation.getLongitude());
+                params.put("latitude","34.402108422360705");
+                params.put("longitude","-2.8970004531777307");
                 return params;
             }
         };
@@ -229,4 +241,14 @@ public class ClientMapFragment extends Fragment {
         vectorDrawable.draw(canvas);
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
+
+    private void startListining(){
+        final Runnable r = new Runnable() {
+            public void run() {
+                loadNearCars();
+            }
+        };
+        handler.postDelayed(r, 5000);
+    }
+
 }
