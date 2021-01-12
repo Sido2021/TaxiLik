@@ -1,5 +1,6 @@
 package com.taxilik.client.profile;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -27,21 +28,30 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ClientProfileFragment extends Fragment {
-    String URL_host = "https://taxiliktestv.000webhostapp.com/profile.php";
-    String profile_id="tp3364ecdcg1runtn0t04jsd8d8smvsrb68xb8rzu0ktudzsbk6aygoouley2fp4p7otqefv7o28ten5gy9qnffgs302wt979qtsy0mlci6ss6tf36mg2mf1tr4oq7r7z0us9bremve0oi2ci8cqy50oqrq2pby7d5u26rqjlg6r5zv9g1tgg5tpeyu9fbirzfc33jlwox71galbu2qdwe7rby1vjla771mjiqenetd7k7tjiqzfds3mik";
-    String URL_Profile = URL_host+"?id="+profile_id;
+    String URL_host = "https://omega-store.000webhostapp.com/getProfile.php";
+
     TextView fullname_field,username_field,fname_prof,lname_prof,email_prof,phone_prof;
     ;
     Button edit_profile;
+
+    FirebaseAuth mAuth ;
+    FirebaseUser currentUser ;
+    ProgressDialog pdDialog;
 
     private ClientHomeFragment.OnFragmentInteractionListener mListener;
 
@@ -88,7 +98,9 @@ public class ClientProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
         return inflater.inflate(R.layout.client_profile_fragment, container, false);
     }
 
@@ -103,12 +115,6 @@ public class ClientProfileFragment extends Fragment {
         lname_prof=view.findViewById(R.id.lname_prof);
         email_prof=view.findViewById(R.id.email_prof);
         phone_prof=view.findViewById(R.id.phone_prof);
-//        fullname_field=findViewById(R.id.fullname_field);
-//        username_field=findViewById(R.id.username_field);
-//        full_name_profile=findViewById(R.id.full_name_profile);
-//        email_profile=findViewById(R.id.email_profile);
-//        phone_profile=findViewById(R.id.phone_profile);
-//        password_profile=findViewById(R.id.password_profile);
         edit_profile=view.findViewById(R.id.edit_profile);
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
@@ -119,6 +125,9 @@ public class ClientProfileFragment extends Fragment {
                 return;
             }
         });
+        pdDialog= new ProgressDialog(getContext());
+        pdDialog.setTitle("Login please wait...");
+        pdDialog.setCancelable(false);
 
         profile();
 
@@ -126,37 +135,47 @@ public class ClientProfileFragment extends Fragment {
 
     private void profile()
     {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL_Profile,
+        pdDialog.show();
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_host,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Log.e("anyText",response);
                         try{
-                            //1-cas d'une base de donnee
-//                            JSONObject jsonObject = new JSONObject(response);
-//                            String id = jsonObject.getString("id");
-//                            String nom = jsonObject.getString("nom");
-//                            String prenom = jsonObject.getString("prenom");
-//                            String email=jsonObject.getString("email");
-//                            String phone=jsonObject.getString("phone");
-////                            setEditText(nom,prenom,email,phone);
-//                            Toast.makeText(ClientProfileFragment.this, nom+" - "+prenom, Toast.LENGTH_SHORT).show();
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
 
-                            //2-pour tester only
-                            setEditText("YASSINE","MEROUANE","yassinemer05@gmail.com","+212 643427501");
 
+                            if(success.equals("0")){
+
+                                setEditText(jsonObject.getString("first_name"),jsonObject.getString("last_name"), currentUser.getEmail(),jsonObject.getString("phone"));
+                            }
+                            else{
+                                setEditText("Unknown","Unknown", "Unknown","Unknown");
+
+                            }
+
+                            pdDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(),"profile error 1-"+e,Toast.LENGTH_LONG).show();
+                            pdDialog.dismiss();
                         }
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(getContext(),"profile error 2-"+error,Toast.LENGTH_LONG).show();
+                pdDialog.dismiss();
             }
         })
         {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<>();
+                params.put("id",currentUser.getUid());
+                return params;
+            }
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);

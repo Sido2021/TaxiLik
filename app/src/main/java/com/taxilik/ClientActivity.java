@@ -2,13 +2,23 @@ package com.taxilik;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
 import com.taxilik.client.profile.ClientProfileFragment;
@@ -21,10 +31,20 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class ClientActivity extends AppCompatActivity implements ClientHomeFragment.OnFragmentInteractionListener
   , ClientOffreFragment.OnFragmentInteractionListener,ClientProfileFragment.OnFragmentInteractionListener{
 
     ImageView menuDrawer ;
+
+    FirebaseAuth mAuth ;
+    FirebaseUser currentUser ;
+    TextView userName ;
+    String URL_host = "https://omega-store.000webhostapp.com/getProfile.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +53,12 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
+
+         userName = findViewById(R.id.text_view_username);
+        profile();
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -73,15 +99,16 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
                     }
                     case R.id.nav_about:{
 
-                        //ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
                         break;
                     }
                 }
 
                 ft.commit();
+                drawer.close();
                 return true;
             }
         });
+
     }
 
 
@@ -111,5 +138,41 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
     @Override
     public void messageFromChildFragment(Uri uri) {
 
+    }
+
+    private void profile()
+    {
+        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_host,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.e("anyText",response);
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            String success = jsonObject.getString("success");
+
+                            String name = jsonObject.getString("first_name")+" "+jsonObject.getString("last_name");
+
+                            userName.setText(name);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<>();
+                params.put("id",currentUser.getUid());
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
     }
 }
