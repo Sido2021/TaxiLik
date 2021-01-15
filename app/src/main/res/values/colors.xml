@@ -16,4 +16,5 @@
 
     <!-- help color-->
     <color name="Green">#43A047</color>
+    <color name="Red">#E53935</color>
 </resources>

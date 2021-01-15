@@ -22,15 +22,19 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.taxilik.CarsDipo;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.taxilik.Car;
 import com.taxilik.R;
-import com.taxilik.TaxiAdapter;
 import com.taxilik.client.home.ClientHomeFragment;
-import com.taxilik.indexUser;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -39,40 +43,25 @@ import java.util.Map;
 
 public class ClientOffreFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     ProgressDialog pdDialog;
     String URL_GET_NEAR_CARS = "https://omega-store.000webhostapp.com/get_near_cars.php";
 
     ListView listTaxi;
 
+    FirebaseFirestore db ;
+    String ClientID = "1" ;
+
+    ArrayList<Long> ordredCarsID =  new ArrayList<>();
+
     private ClientHomeFragment.OnFragmentInteractionListener mListener;
 
-    public ClientOffreFragment() {
-        // Required empty public constructor
-    }
+    public ClientOffreFragment() {}
 
-    public static ClientOffreFragment newInstance(String param1, String param2) {
-        ClientOffreFragment fragment = new ClientOffreFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
     }
 
@@ -82,6 +71,7 @@ public class ClientOffreFragment extends Fragment {
         // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_client_offre, container, false);
 
+        db = FirebaseFirestore.getInstance();
 
         pdDialog= new ProgressDialog(getContext());
         pdDialog.setTitle("Login please wait...");
@@ -90,18 +80,16 @@ public class ClientOffreFragment extends Fragment {
         //listView
         listTaxi=v.findViewById(R.id.listViewTaxi);
 
-
         return v;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        loadNearCars();
+        loadOrdredCars();
     }
 
     private void loadNearCars()
     {
-        pdDialog.show();
         final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_GET_NEAR_CARS,
                 new Response.Listener<String>() {
                     @Override
@@ -113,21 +101,20 @@ public class ClientOffreFragment extends Fragment {
                             JSONArray carsArray = jsonObject.getJSONArray("cars");
 
                             if(success.equals("0")){
-                                ArrayList<CarsDipo> carsList = new ArrayList<>();
-                                for(int i=0;i<carsArray.length();i++){
+                                ArrayList<Car> carsList = new ArrayList<>();
+                                for (int i =0;i<carsArray.length();i++){
                                     JSONObject car = carsArray.getJSONObject(i);
-                                    //Toast.makeText(getContext(),car.getString("car_id") + " , "+ car.getString("distance"),Toast.LENGTH_LONG).show();
-
-                                    if(Double.parseDouble(car.getString("distance")) <1){
-                                        CarsDipo carsDipo = new CarsDipo("",car.getString("driver_name"),"");
-                                        carsList.add(carsDipo);
+                                    if(Double.parseDouble(car.getString("distance")) <1) {
+                                        Car c = new Car(i+1, "", car.getString("driver_name"), "");
+                                        c.setOrdred(ordredCarsID.contains((long)i+1));
+                                        carsList.add(c);
                                     }
-
                                 }
-                                TaxiAdapter adapter=new TaxiAdapter(getContext(),R.layout.car_list,carsList);
+
+                                OffreAdapter adapter=new OffreAdapter(getContext(),carsList);
                                 listTaxi.setAdapter(adapter);
+                                pdDialog.dismiss();
                             }
-                            pdDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Toast.makeText(getContext(),"Registration Error !1"+e,Toast.LENGTH_LONG).show();
@@ -157,6 +144,8 @@ public class ClientOffreFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
+
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -179,4 +168,24 @@ public class ClientOffreFragment extends Fragment {
         // TODO: Update argument type and name
         void messageFromChildFragment(Uri uri);
     }
+
+    private void loadOrdredCars() {
+        pdDialog.show();
+        db.collection("OnlineOrder").whereEqualTo("ClientID",ClientID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        Long cd = document.getLong("CarID");
+                        ordredCarsID.add(cd);
+                        Toast.makeText(getContext(), "CarID"+cd, Toast.LENGTH_SHORT).show();
+                    }
+                    loadNearCars();
+                } else {
+                    pdDialog.dismiss();
+                }
+            }
+        });
+    }
+
 }

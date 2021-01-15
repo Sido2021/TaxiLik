@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.taxilik.R;
 import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
@@ -22,42 +23,22 @@ import com.taxilik.client.home.offre.ClientOffreFragment;
 
 public class ClientHomeFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
 
     private OnFragmentInteractionListener mListener;
+    FirebaseFirestore db ;
 
-    public ClientHomeFragment() {
-        // Required empty public constructor
-    }
-
-    public static ClientHomeFragment newInstance(String param1, String param2) {
-        ClientHomeFragment fragment = new ClientHomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public ClientHomeFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+         db = FirebaseFirestore.getInstance();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_client_home, container, false);
     }
 

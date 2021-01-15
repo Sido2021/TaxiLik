@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="4dp"
+    android:background="@color/white"
+    app:cardCornerRadius="8dp"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp"
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/imageXML"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/icon2"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chauffxml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chauffeur name"
+                android:textColor="@color/black"
+
+                android:layout_marginLeft="7dp"
+                android:textSize="16dp"
+                />
+
+            <TextView
+                android:id="@+id/matxml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="mat:35462"
+                 android:layout_marginLeft="7dp"
+
+                android:textColor="@color/colorPrimaryTransparent"
+                />
+
+
+        </LinearLayout>
+        <Button
+            android:theme="@style/ButtonGreen"
+            style="@style/ButtonGreen"
+            android:id="@+id/send_request"
+            android:layout_width="100dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="@string/send_request"
+            android:visibility="gone"/>
+
+
+        <Button
+            android:theme="@style/ButtonRed"
+            style="@style/ButtonGreen"
+            android:id="@+id/cancel_request"
+            android:layout_width="100dp"
+            android:textSize="10sp"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel"
+            android:visibility="gone"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

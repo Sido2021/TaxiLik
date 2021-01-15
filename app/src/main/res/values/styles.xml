@@ -21,4 +21,10 @@
         <item name="colorAccent">@color/Green</item>
     </style>
 
+    <style name="ButtonRed" parent="Widget.AppCompat.Button.Colored">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/Red</item>
+        <item name="colorAccent">@color/Red</item>
+    </style>
+
 </resources>

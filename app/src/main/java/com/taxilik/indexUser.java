@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,17 +28,17 @@ public class indexUser extends AppCompatActivity {
         //listView
         ListView listTxi=(ListView) findViewById(R.id.listViewTaxi);
 
-        CarsDipo cars1 =new CarsDipo("icon2","chaimae taj","mat:23565356");
-        CarsDipo cars2 =new CarsDipo("icon2","hello hello","mat:23556");
-        CarsDipo cars3 =new CarsDipo("icon2","chaimae taj","mat:235454556");
-        CarsDipo cars4 =new CarsDipo("icon2","hello hello","mat:23565356");
-        CarsDipo cars5 =new CarsDipo("icon2","chaimae taj","mat:23565356");
-        CarsDipo cars6 =new CarsDipo("icon2","chaimae taj","mat:23565356");
-        CarsDipo[] listcars={cars1,cars2,cars3,cars4,cars5,cars6};
+        Car cars1 =new Car(1,"icon2","chaimae taj","mat:23565356");
+        Car cars2 =new Car(1,"icon2","hello hello","mat:23556");
+        Car cars3 =new Car(1,"icon2","chaimae taj","mat:235454556");
+        Car cars4 =new Car(1,"icon2","hello hello","mat:23565356");
+        Car cars5 =new Car(1,"icon2","chaimae taj","mat:23565356");
+        Car cars6 =new Car(1,"icon2","chaimae taj","mat:23565356");
+        Car[] listcars={cars1,cars2,cars3,cars4,cars5,cars6};
         //intialise wmlfile
-        int xmlFile=R.layout.car_list;
+        int xmlFile=R.layout.car_offre_layout;
         //call adapter
-        //TaxiAdapter adapter=new TaxiAdapter(indexUser.this,xmlFile,listcars);
+        //OffreAdapter adapter=new OffreAdapter(indexUser.this,xmlFile,listcars);
         //listTxi.setAdapter(adapter);
 
     }
@@ -94,18 +93,4 @@ public class indexUser extends AppCompatActivity {
             return true;
         }
     };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
