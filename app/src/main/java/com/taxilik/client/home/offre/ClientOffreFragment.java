@@ -2,6 +2,7 @@ package com.taxilik.client.home.offre;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -30,6 +31,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.taxilik.Car;
+import com.taxilik.Data;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
 
@@ -50,7 +52,6 @@ public class ClientOffreFragment extends Fragment {
     ListView listTaxi;
 
     FirebaseFirestore db ;
-    String ClientID = "1" ;
 
     ArrayList<Long> ordredCarsID =  new ArrayList<>();
 
@@ -171,7 +172,7 @@ public class ClientOffreFragment extends Fragment {
 
     private void loadOrdredCars() {
         pdDialog.show();
-        db.collection("OnlineOrder").whereEqualTo("ClientID",ClientID).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("OnlineOrder").whereEqualTo("ClientID", Data.CurrentUser.getId()).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

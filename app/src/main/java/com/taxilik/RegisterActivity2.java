@@ -184,7 +184,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         });
     }
 
-    private void Register(final String id)
+    private void Register(final String userKey)
     {
         pdDialog.show();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_REGISTER,
@@ -200,7 +200,7 @@ public class RegisterActivity2 extends AppCompatActivity {
                             if(success.equals("1")){
                                 Toast.makeText(getApplicationContext(),message,Toast.LENGTH_LONG).show();
                                 pdDialog.dismiss();
-                                Intent login = new Intent(RegisterActivity2.this,LoginActivity.class);
+                                Intent login = new Intent(RegisterActivity2.this,LoginActivity2.class);
                                 startActivity(login);
                                 finish();
                             }
@@ -228,7 +228,7 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
-                params.put("id",id);
+                params.put("user_key",userKey);
                 params.put("first_name",editTextFirstName.getText().toString());
                 params.put("last_name",editTextLastName.getText().toString());
                 params.put("phone",editTextPhoneNumber.getText().toString());
