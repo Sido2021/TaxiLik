@@ -56,9 +56,10 @@ public class SplashScreen extends AppCompatActivity {
         String firstName =sharedPreferences.getString("firstName","");
         String lastName = sharedPreferences.getString("lastName","") ;
         String phone = sharedPreferences.getString("phone","") ;
+        String image = sharedPreferences.getString("image","") ;
         int type = sharedPreferences.getInt("type",0);
 
-        Data.CurrentUser = new User(id,firstName,lastName,phone,type,currentUser.getEmail());
+        Data.CurrentUser = new User(id,firstName,lastName,phone,image,type,currentUser.getEmail());
     }
 
     private boolean isNetworkConnected() {

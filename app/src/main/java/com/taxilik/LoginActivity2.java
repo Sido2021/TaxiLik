@@ -34,6 +34,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.taxilik.Data.CurrentUser;
+
 public class LoginActivity2 extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -157,7 +159,15 @@ public class LoginActivity2 extends AppCompatActivity {
                             String success = jsonObject.getString("success");
 
                             if(success.equals("0")){
-                                saveUser(jsonObject.getInt("id"),jsonObject.getString("first_name"),jsonObject.getString("last_name"),jsonObject.getString("phone"),jsonObject.getInt("type"),currentUser.getEmail());
+                                int id = jsonObject.getInt("id");
+                                String firstName = jsonObject.getString("first_name");
+                                String lastName = jsonObject.getString("last_name");
+                                String phone = jsonObject.getString("phone");
+                                String image = jsonObject.getString("image");
+                                int type = jsonObject.getInt("type") ;
+                                String email = currentUser.getEmail() ;
+                                CurrentUser = new User(id,firstName,lastName,phone,image,type,email);
+                                saveUser();
                             }
                             else{
                                 mAuth.signOut();
@@ -191,20 +201,21 @@ public class LoginActivity2 extends AppCompatActivity {
     }
 
 
-    private void saveUser(int id , String firstName , String lastName , String phone , int type , String email) {
-        sharedPreferences.edit().putInt("id",id).commit();
-        sharedPreferences.edit().putString("firstName",firstName).commit();
-        sharedPreferences.edit().putString("lastName",lastName).commit();
-        sharedPreferences.edit().putString("phone",phone).commit();
-        sharedPreferences.edit().putInt("type",type).commit();
+    private void saveUser() {
+        sharedPreferences.edit().putInt("id",CurrentUser.getId()).commit();
+        sharedPreferences.edit().putString("firstName",CurrentUser.getFirstName()).commit();
+        sharedPreferences.edit().putString("lastName",CurrentUser.getLastName()).commit();
+        sharedPreferences.edit().putString("phone",CurrentUser.getPhone()).commit();
+        sharedPreferences.edit().putString("image",CurrentUser.getImage()).commit();
+        sharedPreferences.edit().putInt("type",CurrentUser.getType()).commit();
 
-        Data.CurrentUser = new User(id,firstName,lastName,phone,type,email);
 
-        Toast.makeText(LoginActivity2.this, "Welcome "+firstName+" "+lastName,
+
+        Toast.makeText(LoginActivity2.this, "Welcome "+CurrentUser.getFirstName()+" "+CurrentUser.getLastName(),
                 Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
-        if(type==1)intent.setClass(LoginActivity2.this,ClientActivity.class);
+        if(CurrentUser.getType()==1)intent.setClass(LoginActivity2.this,ClientActivity.class);
         else intent.setClass(LoginActivity2.this,DriverActivity.class);
         startActivity(intent);
         finish();

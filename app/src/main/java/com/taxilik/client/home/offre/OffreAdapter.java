@@ -1,6 +1,7 @@
 package com.taxilik.client.home.offre;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +23,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.taxilik.Data.CurrentUser;
+
 public class OffreAdapter extends BaseAdapter {
     Context context;
     ArrayList<Car> carsList;
-    String ClientID = "1" ;
 
     FirebaseFirestore db ;
 
@@ -98,11 +100,11 @@ public class OffreAdapter extends BaseAdapter {
 
     private void sendRequest(final Car c){
         Map<String, Object> onlineOrder = new HashMap<>();
-        onlineOrder.put("ClientID", ClientID);
+        onlineOrder.put("ClientID", CurrentUser.getId());
         onlineOrder.put("CarID", c.getCarID());
 
 
-        db.collection("OnlineOrder").document(ClientID +"-"+c.getCarID())
+        db.collection("OnlineOrder").document(CurrentUser.getId() +"-"+c.getCarID())
                 .set(onlineOrder)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -114,13 +116,14 @@ public class OffreAdapter extends BaseAdapter {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.e("gg",e.getMessage());
                     }
                 });
 
     }
 
     private void cancelRequest(final Car c) {
-        db.collection("OnlineOrder").document(ClientID +"-"+c.getCarID())
+        db.collection("OnlineOrder").document(CurrentUser.getId() +"-"+c.getCarID())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -132,7 +135,9 @@ public class OffreAdapter extends BaseAdapter {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        Log.e("gg",e.getMessage());
                     }
+
                 });
     }
 }

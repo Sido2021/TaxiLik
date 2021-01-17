@@ -8,7 +8,7 @@
     <color name="colorPrimaryTransparent">#7F32325B</color>
     <color name="colorPrimaryDarkTransparent">#7F3700B3</color>
     <color name="colorAccentTransparent">#7FFFAB00</color>
-    <color name="lightgray">#F4F4F4</color>
+    <color name="lightgray">#EAEAEA</color>
     <color name="white">#fff</color>
     <color name="black">#000000</color>
     <color name="OrandeTaxi">#fb9403</color>

@@ -21,24 +21,11 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Retour"
+        android:text="Back"
         android:textColor="#000"
         />
     </LinearLayout>
 
-
-
-    <ImageView
-        android:layout_width="130dp"
-        android:layout_height="74dp"
-        android:src="@drawable/logo"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayoutRegistration"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_gravity="center_horizontal"
-        app:layout_constraintVertical_bias="0.306" />
 
     <LinearLayout
         android:id="@+id/linearLayoutRegistration"
@@ -68,6 +55,17 @@
             android:textSize="20dp"
             android:textStyle="bold"
             android:gravity="center"/>
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="50dp">
+            <ImageView
+                android:id="@+id/profile_image_signup"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile" />
+        </androidx.cardview.widget.CardView>
 
         <EditText
             android:id="@+id/edit_text_first_name"
@@ -80,6 +78,8 @@
             android:hint="First Name"
             android:background="@drawable/background_text_white"
             android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             />
         <EditText
             android:id="@+id/edit_text_last_name"
@@ -92,6 +92,8 @@
             android:hint="Last Name"
             android:background="@drawable/background_text_white"
             android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             />
         <EditText
             android:id="@+id/edit_text_phone_number"
@@ -104,6 +106,8 @@
             android:hint="Phone Number"
             android:background="@drawable/background_text_white"
             android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
             />
         <EditText
         android:id="@+id/edit_text_email_register"
@@ -114,7 +118,9 @@
             android:layout_marginRight="8dp"
             android:background="@drawable/background_text_white"
             android:hint="Email"
-            android:padding="4dp"/>
+            android:padding="4dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"/>
     <EditText
         android:id="@+id/edit_text_password_register"
         android:layout_width="match_parent"
@@ -124,8 +130,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:hint="Password"
+        android:inputType="textPassword"
         android:background="@drawable/background_text_white"
         android:padding="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         />
     <EditText
         android:id="@+id/edit_text_password_confirmation_register"
@@ -136,8 +145,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:hint="Confirm Password"
+        android:inputType="textPassword"
         android:background="@drawable/background_text_white"
         android:padding="4dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         />
 
     <Button

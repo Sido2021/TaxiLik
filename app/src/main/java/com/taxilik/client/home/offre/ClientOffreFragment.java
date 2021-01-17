@@ -106,8 +106,8 @@ public class ClientOffreFragment extends Fragment {
                                 for (int i =0;i<carsArray.length();i++){
                                     JSONObject car = carsArray.getJSONObject(i);
                                     if(Double.parseDouble(car.getString("distance")) <1) {
-                                        Car c = new Car(i+1, "", car.getString("driver_name"), "");
-                                        c.setOrdred(ordredCarsID.contains((long)i+1));
+                                        Car c = new Car(Integer.parseInt(car.getString("car_id")), "", car.getString("driver_name"), "");
+                                        c.setOrdred(ordredCarsID.contains((long)Integer.parseInt(car.getString("car_id"))));
                                         carsList.add(c);
                                     }
                                 }

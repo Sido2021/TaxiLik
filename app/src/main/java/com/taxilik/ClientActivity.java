@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
 import com.taxilik.client.profile.ClientProfileFragment;
@@ -36,6 +37,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.taxilik.Data.CurrentUser;
+
 public class ClientActivity extends AppCompatActivity implements ClientHomeFragment.OnFragmentInteractionListener
   , ClientOffreFragment.OnFragmentInteractionListener,ClientProfileFragment.OnFragmentInteractionListener{
 
@@ -44,6 +47,7 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
     FirebaseAuth mAuth ;
     FirebaseUser currentUser ;
     TextView userName ;
+    ImageView userImage ;
     String URL_host = "https://omega-store.000webhostapp.com/getProfile.php";
 
     @Override
@@ -51,14 +55,18 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_client);
 
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
 
-         userName = findViewById(R.id.text_view_username);
-        profile();
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+
+        userName = header.findViewById(R.id.text_view_username);
+        userImage = header.findViewById(R.id.profile_image);
+
 
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
@@ -75,7 +83,6 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
         });
 
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -109,6 +116,9 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
             }
         });
 
+
+        userName.setText(CurrentUser.getFullName());
+        if(!CurrentUser.getImage().equals("") ||CurrentUser.getImage()!=null)Picasso.get().load(CurrentUser.getImage()).into(userImage);
     }
 
 
@@ -138,41 +148,5 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
     @Override
     public void messageFromChildFragment(Uri uri) {
 
-    }
-
-    private void profile()
-    {
-        final StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_host,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Log.e("anyText",response);
-                        try{
-                            JSONObject jsonObject = new JSONObject(response);
-                            String success = jsonObject.getString("success");
-
-                            String name = jsonObject.getString("first_name")+" "+jsonObject.getString("last_name");
-
-                            userName.setText(name);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        })
-        {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String,String> params = new HashMap<>();
-                params.put("id",currentUser.getUid());
-                return params;
-            }
-        };
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
     }
 }

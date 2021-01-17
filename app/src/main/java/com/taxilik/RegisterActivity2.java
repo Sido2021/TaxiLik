@@ -3,14 +3,24 @@ package com.taxilik;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -21,13 +31,22 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,8 +59,18 @@ public class RegisterActivity2 extends AppCompatActivity {
     ProgressDialog pdDialog;
 
     private FirebaseAuth mAuth;
+    FirebaseStorage storage = FirebaseStorage.getInstance("gs://taxilik.appspot.com");
+    StorageReference storageRef ;
+
+    ImageView imageViewProfile ;
+    Uri selectedImage ;
+    Uri uploadedImage ;
+
 
     String URL_REGISTER = "https://omega-store.000webhostapp.com/register.php";
+
+    public static int PERMISSION_REQUEST_CODE = 101;
+    public static int PICK_IMAGE_REQUEST_CODE = 102;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -50,6 +79,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         setContentView(R.layout.activity_registration);
 
         mAuth = FirebaseAuth.getInstance();
+        storageRef = storage.getReference();
 
         pdDialog= new ProgressDialog(RegisterActivity2.this);
         pdDialog.setTitle("Login please wait...");
@@ -61,6 +91,8 @@ public class RegisterActivity2 extends AppCompatActivity {
         editTextEmail = findViewById(R.id.edit_text_email_register);
         editTextPassword = findViewById(R.id.edit_text_password_register);
         editTextPasswordConfirmation = findViewById(R.id.edit_text_password_confirmation_register);
+        imageViewProfile = findViewById(R.id.profile_image_signup);
+
 
         buttonSignUp = findViewById(R.id.button_sign_up);
 
@@ -68,6 +100,13 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createAccount(editTextEmail.getText().toString(),editTextPassword.getText().toString());
+            }
+        });
+
+        imageViewProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showGallery();
             }
         });
     }
@@ -85,7 +124,7 @@ public class RegisterActivity2 extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Register(user.getUid());
+                            uploadImageAndSaveInfo();
                             sendVerificationEmail(user);
                         } else {
                             Toast.makeText(RegisterActivity2.this, "non", Toast.LENGTH_SHORT).show();
@@ -96,7 +135,6 @@ public class RegisterActivity2 extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity2.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
-                        hideProgressBar();
                     }
                 });
     }
@@ -228,6 +266,12 @@ public class RegisterActivity2 extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
+                if(uploadedImage!=null) {
+                    params.put("image",uploadedImage.getEncodedPath());
+                }
+                else
+                    params.put("image","");
+
                 params.put("user_key",userKey);
                 params.put("first_name",editTextFirstName.getText().toString());
                 params.put("last_name",editTextLastName.getText().toString());
@@ -238,5 +282,94 @@ public class RegisterActivity2 extends AppCompatActivity {
         };
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
+    }
+
+    public void showGallery() {
+        if (hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            loadGallery();
+        } else {
+            requestPermissionsSafely(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
+        }
+    }
+
+
+    private void loadGallery() {
+        Intent choose = new Intent(Intent.ACTION_PICK,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(choose, PICK_IMAGE_REQUEST_CODE);
+    }
+
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NotNull String[] permissions, @NotNull int[] grantResults) {
+        if (requestCode == PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                loadGallery();
+            }
+        }
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                selectedImage = data.getData();
+                Picasso.get().load(selectedImage).into(imageViewProfile);
+            }
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void requestPermissionsSafely(String[] permissions, int requestCode) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(permissions, requestCode);
+        }
+    }
+
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public boolean hasPermission(String permission) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.M ||
+                checkSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void uploadImageAndSaveInfo(){
+
+        final FirebaseUser user = mAuth.getCurrentUser();
+        if(selectedImage !=null){
+
+            imageViewProfile.setDrawingCacheEnabled(true);
+            imageViewProfile.buildDrawingCache();
+            Bitmap bitmap = ((BitmapDrawable) imageViewProfile.getDrawable()).getBitmap();
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            byte[] data = baos.toByteArray();
+
+
+            StorageReference filepath=storageRef.child("Images").child(selectedImage.getLastPathSegment());
+
+            final UploadTask uploadTask = filepath.putBytes(data);
+            uploadTask.addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Register(user.getUid());
+                    Log.e("Profile:","Failed...");
+                }
+            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    uploadedImage = taskSnapshot.getUploadSessionUri();
+                    Register(user.getUid());
+                }
+            });
+
+        }
+        else {
+            Register(user.getUid());
+        }
+
     }
 }
