@@ -29,6 +29,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -64,7 +65,7 @@ public class RegisterActivity2 extends AppCompatActivity {
 
     ImageView imageViewProfile ;
     Uri selectedImage ;
-    Uri uploadedImage ;
+    String uploadedImage ;
 
 
     String URL_REGISTER = "https://omega-store.000webhostapp.com/register.php";
@@ -267,7 +268,7 @@ public class RegisterActivity2 extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<>();
                 if(uploadedImage!=null) {
-                    params.put("image",uploadedImage.getEncodedPath());
+                    params.put("image",uploadedImage);
                 }
                 else
                     params.put("image","");
@@ -345,27 +346,30 @@ public class RegisterActivity2 extends AppCompatActivity {
             imageViewProfile.buildDrawingCache();
             Bitmap bitmap = ((BitmapDrawable) imageViewProfile.getDrawable()).getBitmap();
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 50, baos);
             byte[] data = baos.toByteArray();
 
 
-            StorageReference filepath=storageRef.child("Images").child(selectedImage.getLastPathSegment());
+            final StorageReference filepath=storageRef.child("Images").child(selectedImage.getLastPathSegment());
 
             final UploadTask uploadTask = filepath.putBytes(data);
-            uploadTask.addOnFailureListener(new OnFailureListener() {
+
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
-                public void onFailure(@NonNull Exception exception) {
-                    Register(user.getUid());
-                    Log.e("Profile:","Failed...");
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+                    return filepath.getDownloadUrl();
                 }
-            }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
                 @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    uploadedImage = taskSnapshot.getUploadSessionUri();
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful())
+                        uploadedImage = task.getResult().toString();
                     Register(user.getUid());
                 }
             });
-
         }
         else {
             Register(user.getUid());

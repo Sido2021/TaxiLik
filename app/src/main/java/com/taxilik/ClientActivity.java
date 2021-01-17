@@ -118,7 +118,7 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
 
 
         userName.setText(CurrentUser.getFullName());
-        if(!CurrentUser.getImage().equals("") ||CurrentUser.getImage()!=null)Picasso.get().load(CurrentUser.getImage()).into(userImage);
+        if(!CurrentUser.getImage().equals("") && CurrentUser.getImage()!=null)Picasso.get().load(CurrentUser.getImage()).into(userImage);
     }
 
 

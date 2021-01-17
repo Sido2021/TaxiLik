@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.squareup.picasso.Picasso;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
 
@@ -24,16 +26,18 @@ public class ClientProfileFragment extends Fragment {
     TextView fullname_field,username_field,fname_prof,lname_prof,email_prof,phone_prof;
     ;
     Button edit_profile;
+    ImageView userPofile ;
 
     private ClientHomeFragment.OnFragmentInteractionListener mListener;
 
-    private void setEditText(String nom,String prenom,String email,String phone){
-        fullname_field.setText(nom.concat(" "+prenom));
-        username_field.setText(nom.concat("_"+prenom+"@"));
-        fname_prof.setText(nom);
-        lname_prof.setText(prenom);
-        email_prof.setText(email);
-        phone_prof.setText(phone);
+    private void setEditText(){
+        fullname_field.setText(CurrentUser.getFirstName().concat(" "+CurrentUser.getLastName()));
+        username_field.setText(CurrentUser.getFirstName().concat("_"+CurrentUser.getLastName()+"@"));
+        fname_prof.setText(CurrentUser.getFirstName());
+        lname_prof.setText(CurrentUser.getLastName());
+        email_prof.setText(CurrentUser.getEmail());
+        phone_prof.setText(CurrentUser.getPhone());
+        Picasso.get().load(CurrentUser.getImage()).into(userPofile);
     }
 
 
@@ -63,6 +67,7 @@ public class ClientProfileFragment extends Fragment {
         email_prof=view.findViewById(R.id.email_prof);
         phone_prof=view.findViewById(R.id.phone_prof);
         edit_profile=view.findViewById(R.id.edit_profile);
+        userPofile = view.findViewById(R.id.profile_image);
 
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,7 +77,7 @@ public class ClientProfileFragment extends Fragment {
             }
         });
 
-        setEditText(CurrentUser.getFirstName(),CurrentUser.getLastName(),CurrentUser.getEmail(),CurrentUser.getPhone());
+        setEditText();
     }
 
     @Override
