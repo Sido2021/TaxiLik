@@ -57,7 +57,7 @@
             android:layout_weight="1"
             android:paddingLeft="20dp"
             android:textSize="16dp"
-            android:text="20/12/2021" />
+            android:text="15/1/2021" />
 
     </LinearLayout>
 
@@ -70,7 +70,7 @@
 
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/check_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="10dp"
@@ -103,6 +103,147 @@
 
             <TextView
                 android:id="@+id/matxml"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="mat:35462"
+                android:layout_marginLeft="7dp"
+
+                android:textColor="@color/colorPrimaryTransparent"
+                />
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- test duplicate-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/check_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/imageXML1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/icon2"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chauffxml1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chauffeur name"
+                android:textColor="@color/black"
+
+                android:layout_marginLeft="7dp"
+                android:textSize="16dp"
+                />
+
+            <TextView
+                android:id="@+id/matxml1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="mat:35462"
+                android:layout_marginLeft="7dp"
+
+                android:textColor="@color/colorPrimaryTransparent"
+                />
+
+
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        >
+
+        <View
+            android:id="@+id/divider21"
+            android:layout_width="170dp"
+            android:layout_marginTop="30dp"
+            android:layout_height="2dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textView31"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_weight="1"
+            android:paddingLeft="20dp"
+            android:textSize="16dp"
+            android:text="14/1/2021" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="20dp"
+        android:paddingTop="20dp"
+        android:orientation="horizontal">
+
+
+        <CheckBox
+            android:id="@+id/check_3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="invisible"
+            />
+
+        <ImageView
+            android:id="@+id/imageXML11"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            app:srcCompat="@drawable/icon2"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chauffxml11"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chauffeur name"
+                android:textColor="@color/black"
+
+                android:layout_marginLeft="7dp"
+                android:textSize="16dp"
+                />
+
+            <TextView
+                android:id="@+id/matxml11"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="mat:35462"
