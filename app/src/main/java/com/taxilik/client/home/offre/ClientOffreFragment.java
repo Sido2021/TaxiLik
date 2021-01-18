@@ -3,6 +3,7 @@ package com.taxilik.client.home.offre;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -50,7 +52,8 @@ public class ClientOffreFragment extends Fragment {
     String URL_GET_NEAR_CARS = "https://omega-store.000webhostapp.com/get_near_cars.php";
 
     ListView listTaxi;
-
+    Button btnVip,btnTaxi;
+    View dividerVip,dividerTaxi;
     FirebaseFirestore db ;
 
     ArrayList<Long> ordredCarsID =  new ArrayList<>();
@@ -80,6 +83,26 @@ public class ClientOffreFragment extends Fragment {
 
         //listView
         listTaxi=v.findViewById(R.id.listViewTaxi);
+        // buttion vip
+        btnVip=v.findViewById(R.id.button);dividerVip=v.findViewById(R.id.divider4);
+        btnTaxi=v.findViewById(R.id.button2);dividerTaxi=v.findViewById(R.id.divider);
+        btnVip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnVip.setTextColor(Color.parseColor("#fb9403"));dividerVip.setBackgroundColor(Color.parseColor("#fb9403"));
+                btnTaxi.setTextColor(Color.parseColor("#000000"));dividerTaxi.setBackgroundColor(Color.parseColor("#EAEAEA"));
+                Toast.makeText(getContext(), "Aucun Vip voitures", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        btnTaxi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btnVip.setTextColor(Color.parseColor("#000000"));dividerVip.setBackgroundColor(Color.parseColor("#EAEAEA"));
+                btnTaxi.setTextColor(Color.parseColor("#fb9403")); dividerTaxi.setBackgroundColor(Color.parseColor("#fb9403"));
+
+            }
+        });
 
         return v;
     }

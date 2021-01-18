@@ -9,15 +9,20 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.taxilik.Car;
 import com.taxilik.R;
+import com.taxilik.client.home.ClientHomeFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -71,6 +76,7 @@ public class OffreAdapter extends BaseAdapter {
         if(carsList.get(position).isOrdred()){
             sendRequest.setVisibility(View.GONE);
             cancelRequest.setVisibility(View.VISIBLE);
+
         }
         else {
             cancelRequest.setVisibility(View.GONE);
