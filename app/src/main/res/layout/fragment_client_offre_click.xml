@@ -14,8 +14,9 @@
 
         <com.google.android.gms.maps.MapView
             android:id="@+id/mapView"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="match_parent"
-            android:layout_height="442dp" />
+            android:layout_height="206dp" />
 
 
 
@@ -34,7 +35,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginRight="20dp"
                     android:layout_marginLeft="30dp"
                     android:orientation="horizontal">
 
@@ -57,7 +58,7 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="35dp"
+                    android:layout_marginRight="20dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -115,25 +116,26 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/NomPrenoCh"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Nom Prenom"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="14dp" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/matVoi"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="matrecule de voiture"
                         android:textColor="@color/black"
-                        android:textSize="18dp" />
+                        android:textSize="14dp" />
                 </LinearLayout>
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="58dp"
+                    android:textSize="12dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#2E9AFE"

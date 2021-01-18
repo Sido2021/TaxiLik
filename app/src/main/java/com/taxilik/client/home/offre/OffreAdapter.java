@@ -1,6 +1,7 @@
 package com.taxilik.client.home.offre;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -33,13 +35,17 @@ import static com.taxilik.Data.CurrentUser;
 public class OffreAdapter extends BaseAdapter {
     Context context;
     ArrayList<Car> carsList;
-
     FirebaseFirestore db ;
 
-    public OffreAdapter(Context context,  ArrayList<Car> carsList) {
+    //chaimae
+    private Fragment fragment;
+
+
+    public OffreAdapter(Context context,  ArrayList<Car> carsList,Fragment fragment) {
         this.context=context;
         this.carsList=carsList;
         db = FirebaseFirestore.getInstance();
+        this.fragment=fragment;
     }
 
 
@@ -91,6 +97,18 @@ public class OffreAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 sendRequest(carsList.get(position));
+                // chaymae
+
+                //envoyer les donnes
+                Bundle infob= new Bundle();
+                infob.putString("Chauffeurname",carsList.get(position).getDrivername());
+                infob.putString("matricule",carsList.get(position).getMatDisc());
+
+                //ok
+                  ClientHomeFragment f = (ClientHomeFragment) fragment;
+                  f.Open(infob);
+
+
             }
         });
         cancelRequest.setOnClickListener(new View.OnClickListener() {

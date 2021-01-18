@@ -134,8 +134,8 @@ public class ClientOffreFragment extends Fragment {
                                         carsList.add(c);
                                     }
                                 }
-
-                                OffreAdapter adapter=new OffreAdapter(getContext(),carsList);
+//chaimae
+                                OffreAdapter adapter=new OffreAdapter(getContext(),carsList,getParentFragment());
                                 listTaxi.setAdapter(adapter);
                                 pdDialog.dismiss();
                             }

@@ -20,6 +20,7 @@ import com.taxilik.R;
 import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
+import com.taxilik.client.home.offre.ClientOffreFragmentClick;
 
 public class ClientHomeFragment extends Fragment {
 
@@ -41,6 +42,7 @@ public class ClientHomeFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_client_home, container, false);
     }
+
 
 
 
@@ -94,4 +96,15 @@ public class ClientHomeFragment extends Fragment {
         // TODO: Update argument type and name
         void messageFromParentFragment(Uri uri);
     }
+
+    // chaymae for click
+    public void Open(Bundle info){
+        Fragment childFragment;
+        childFragment=new ClientOffreFragmentClick();
+        FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.child_fragment_container,childFragment).commit();
+        childFragment.setArguments(info);
+    }
+
+
 }
