@@ -22,7 +22,6 @@
             android:label="@string/title_activity_client"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".RegisterActivity2" />
-        <activity android:name=".indexUser" />
         <activity android:name=".LoginActivity2" />
         <activity android:name=".SplashScreen">
             <intent-filter>
@@ -31,10 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RegistrationActivity"
-            android:theme="@style/AppTheme2" />
-        <activity android:name=".LoginActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

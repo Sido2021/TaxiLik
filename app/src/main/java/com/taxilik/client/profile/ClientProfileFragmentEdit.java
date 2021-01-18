@@ -17,9 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
-import com.taxilik.LoginActivity;
 import com.taxilik.R;
-import com.taxilik.RegistrationActivity;
 
 import org.json.JSONObject;
 
