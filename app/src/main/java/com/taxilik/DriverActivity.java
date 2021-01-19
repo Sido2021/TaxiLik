@@ -6,35 +6,57 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.squareup.picasso.Picasso;
+import com.taxilik.about.AboutFragment;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.driver.home.DriverHomeFragment;
+import com.taxilik.driver.home.request.DriverRequestFragment;
+import com.taxilik.driver.profile.DriverProfileFragment;
+import com.taxilik.settings.SettingsFragment;
 
-public class DriverActivity extends AppCompatActivity implements DriverHomeFragment.OnFragmentInteractionListener {
+import static com.taxilik.Data.CurrentUser;
+
+public class DriverActivity extends AppCompatActivity implements DriverHomeFragment.OnFragmentInteractionListener ,
+        DriverRequestFragment.OnFragmentInteractionListener {
 
     ImageView menuDrawer ;
+
+    FirebaseUser currentUser ;
+    TextView userName ;
+    ImageView userImage ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_driver);
 
+        setContentView(R.layout.activity_main);
 
-        setContentView(R.layout.activity_client);
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        currentUser = mAuth.getCurrentUser();
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        View header = navigationView.getHeaderView(0);
+
+        userName = header.findViewById(R.id.text_view_username);
+        userImage = header.findViewById(R.id.profile_image);
+
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
@@ -59,26 +81,32 @@ public class DriverActivity extends AppCompatActivity implements DriverHomeFragm
                         break;
                     }
                     case R.id.nav_profile :{
-
-                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new DriverProfileFragment());
                         break;
                     }
                     case R.id.nav_settings :{
-
-                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new SettingsFragment());
                         break;
                     }
-                    case R.id.nav_about:{
 
-                        ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                    case R.id.nav_about:{
+                        ft.replace(R.id.parent_fragment_container, new AboutFragment());
+                        break;
+                    }
+                    case R.id.nav_logout:{
+                        logout();
                         break;
                     }
                 }
 
                 ft.commit();
+                drawer.close();
                 return true;
             }
         });
+
+        userName.setText(CurrentUser.getFullName());
+        if(!CurrentUser.getImage().equals("") && CurrentUser.getImage()!=null) Picasso.get().load(CurrentUser.getImage()).into(userImage);
     }
 
     @Override
@@ -93,7 +121,6 @@ public class DriverActivity extends AppCompatActivity implements DriverHomeFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toptoolbar, menu);
         return true;
     }
@@ -101,5 +128,15 @@ public class DriverActivity extends AppCompatActivity implements DriverHomeFragm
     @Override
     public void messageFromParentFragment(Uri uri) {
 
+    }
+
+    @Override
+    public void messageFromChildFragment(Uri uri) {
+
+    }
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this,LoginActivity2.class));
+        finish();
     }
 }

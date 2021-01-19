@@ -9,15 +9,23 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.taxilik.Car;
+import com.taxilik.ClientActivity;
 import com.taxilik.R;
+import com.taxilik.client.home.ClientHomeFragment;
+import com.taxilik.client.home.map.ClientMapFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +39,8 @@ public class OffreAdapter extends BaseAdapter {
 
     FirebaseFirestore db ;
 
-    public OffreAdapter(Context context,  ArrayList<Car> carsList) {
+
+    public OffreAdapter(Context context, ArrayList<Car> carsList) {
         this.context=context;
         this.carsList=carsList;
         db = FirebaseFirestore.getInstance();
@@ -140,4 +149,5 @@ public class OffreAdapter extends BaseAdapter {
 
                 });
     }
+
 }

@@ -1,8 +1,9 @@
 package com.taxilik;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,50 +11,37 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
+import com.taxilik.about.AboutFragment;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
 import com.taxilik.client.profile.ClientProfileFragment;
-import com.taxilik.driver.home.DriverHomeFragment;
+import com.taxilik.settings.SettingsFragment;
 
 import androidx.annotation.NonNull;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.taxilik.Data.CurrentUser;
 
 public class ClientActivity extends AppCompatActivity implements ClientHomeFragment.OnFragmentInteractionListener
-  , ClientOffreFragment.OnFragmentInteractionListener,ClientProfileFragment.OnFragmentInteractionListener{
+  , ClientOffreFragment.OnFragmentInteractionListener {
 
     ImageView menuDrawer ;
 
-    FirebaseAuth mAuth ;
     FirebaseUser currentUser ;
     TextView userName ;
     ImageView userImage ;
-    String URL_host = "https://omega-store.000webhostapp.com/getProfile.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_client);
+        setContentView(R.layout.activity_main);
 
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -101,11 +89,16 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
                     }
                     case R.id.nav_settings :{
 
-                        //ft.replace(R.id.parent_fragment_container, new DriverHomeFragment());
+                        ft.replace(R.id.parent_fragment_container, new SettingsFragment());
                         break;
                     }
                     case R.id.nav_about:{
 
+                        ft.replace(R.id.parent_fragment_container, new AboutFragment());
+                        break;
+                    }
+                    case R.id.nav_logout:{
+                        logout();
                         break;
                     }
                 }
@@ -121,6 +114,11 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
         if(!CurrentUser.getImage().equals("") && CurrentUser.getImage()!=null)Picasso.get().load(CurrentUser.getImage()).into(userImage);
     }
 
+    private void logout() {
+        FirebaseAuth.getInstance().signOut();
+        startActivity(new Intent(this,LoginActivity2.class));
+        finish();
+    }
 
 
     @Override
@@ -135,7 +133,6 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.toptoolbar, menu);
         return true;
     }
@@ -149,4 +146,5 @@ public class ClientActivity extends AppCompatActivity implements ClientHomeFragm
     public void messageFromChildFragment(Uri uri) {
 
     }
+
 }

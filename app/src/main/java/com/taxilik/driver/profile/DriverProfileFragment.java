@@ -1,9 +1,14 @@
-package com.taxilik.client.profile;
+package com.taxilik.driver.profile;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,17 +16,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.squareup.picasso.Picasso;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
+import com.taxilik.client.profile.ClientProfileFragmentEdit;
 
 import static com.taxilik.Data.CurrentUser;
 
-public class ClientProfileFragment extends Fragment {
+public class DriverProfileFragment extends Fragment {
 
     TextView fullname_field,username_field,fname_prof,lname_prof,email_prof,phone_prof;
 
@@ -31,7 +33,7 @@ public class ClientProfileFragment extends Fragment {
     private ClientHomeFragment.OnFragmentInteractionListener mListener;
 
 
-    public ClientProfileFragment() {}
+    public DriverProfileFragment(){}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,7 +64,7 @@ public class ClientProfileFragment extends Fragment {
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),ClientProfileFragmentEdit.class);
+                Intent intent=new Intent(getContext(), ClientProfileFragmentEdit.class);
                 startActivity(intent);
             }
         });
@@ -79,9 +81,6 @@ public class ClientProfileFragment extends Fragment {
         phone_prof.setText(CurrentUser.getPhone());
         Picasso.get().load(CurrentUser.getImage()).into(userPofile);
     }
-
-
-
 
     @Override
     public void onAttach(Context context) {

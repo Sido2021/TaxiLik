@@ -35,6 +35,7 @@ import com.taxilik.Data;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,8 +46,8 @@ import java.util.Map;
 
 public class ClientOffreFragment extends Fragment {
 
-
     ProgressDialog pdDialog;
+
     String URL_GET_NEAR_CARS = "https://omega-store.000webhostapp.com/get_near_cars.php";
 
     ListView listTaxi;
@@ -54,8 +55,6 @@ public class ClientOffreFragment extends Fragment {
     FirebaseFirestore db ;
 
     ArrayList<Long> ordredCarsID =  new ArrayList<>();
-
-    private ClientHomeFragment.OnFragmentInteractionListener mListener;
 
     public ClientOffreFragment() {}
 
@@ -69,7 +68,6 @@ public class ClientOffreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v=inflater.inflate(R.layout.fragment_client_offre, container, false);
 
         db = FirebaseFirestore.getInstance();
@@ -78,7 +76,6 @@ public class ClientOffreFragment extends Fragment {
         pdDialog.setTitle("Login please wait...");
         pdDialog.setCancelable(false);
 
-        //listView
         listTaxi=v.findViewById(R.id.listViewTaxi);
 
         return v;
@@ -148,25 +145,17 @@ public class ClientOffreFragment extends Fragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NotNull Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (ClientHomeFragment.OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void messageFromChildFragment(Uri uri);
     }
 

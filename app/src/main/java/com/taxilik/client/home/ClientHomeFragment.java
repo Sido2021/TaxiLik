@@ -20,11 +20,11 @@ import com.taxilik.R;
 import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
+import com.taxilik.client.home.offre.OffreAdapter;
 
 public class ClientHomeFragment extends Fragment {
 
 
-    private OnFragmentInteractionListener mListener;
     FirebaseFirestore db ;
 
     public ClientHomeFragment() { }
@@ -77,7 +77,6 @@ public class ClientHomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -87,11 +86,9 @@ public class ClientHomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void messageFromParentFragment(Uri uri);
     }
 }
