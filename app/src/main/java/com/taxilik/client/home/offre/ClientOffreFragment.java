@@ -76,7 +76,7 @@ public class ClientOffreFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
 
         pdDialog= new ProgressDialog(getContext());
-        pdDialog.setTitle("Login please wait...");
+        pdDialog.setTitle("please wait...");
         pdDialog.setCancelable(false);
 
         listTaxi=v.findViewById(R.id.listViewTaxi);

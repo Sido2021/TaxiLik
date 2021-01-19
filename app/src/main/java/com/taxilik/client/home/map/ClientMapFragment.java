@@ -57,7 +57,7 @@ import java.util.Map;
 public class ClientMapFragment extends Fragment {
 
     GoogleMap map ;
-    Location currentLocation;
+    Location currentLocation ;
     FusedLocationProviderClient fusedLocationProviderClient;
     public static final int REQUEST_CODE = 101;
     String URL_GET_NEAR_CARS = "https://omega-store.000webhostapp.com/get_near_cars.php";
@@ -66,15 +66,35 @@ public class ClientMapFragment extends Fragment {
 
     ArrayList<MarkerOptions> carsList = new ArrayList<>();
     ArrayList<ArrayList<LatLng>> carsLocationForSimulation = new ArrayList<>();
+
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         @Override
         public void onMapReady(GoogleMap googleMap) {
             map = googleMap;
-            fetchLastLocation();
+            createTestLocation();
         }
     };
 
+    private void createTestLocation() {
+        /*currentLocation = new Location("");
+        currentLocation.setLatitude(34.402108422360705);
+        currentLocation.setLongitude(-2.8970004531777307);*/
+
+        LatLng latLng = new LatLng(34.402108422360705,-2.8970004531777307);
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Test Location");
+
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+        map.addMarker(markerOptions);
+
+        map.addCircle(new CircleOptions()
+                .center(new LatLng(latLng.latitude, latLng.longitude))
+                .radius(1000).strokeWidth(2)
+                .strokeColor(Color.BLUE)
+                .fillColor(0x3f0000ff));
+
+        loadNearCars();
+    }
 
 
     Handler handler = new Handler();
@@ -94,7 +114,7 @@ public class ClientMapFragment extends Fragment {
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         if (mapFragment != null) {
             pdDialog= new ProgressDialog(getContext());
-            pdDialog.setTitle("Login please wait...");
+            pdDialog.setTitle("wait...");
             pdDialog.setCancelable(false);
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
             mapFragment.getMapAsync(callback);
@@ -130,25 +150,10 @@ public class ClientMapFragment extends Fragment {
 
                     //test location 34.402108422360705, -2.8970004531777307
 
-                    currentLocation.setLatitude(34.402108422360705);
-                    currentLocation.setLongitude(-2.8970004531777307);
 
-                    latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-                    markerOptions = new MarkerOptions().position(latLng).title("My Test Location");
-
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
-                    map.addMarker(markerOptions);
-
-                    map.addCircle(new CircleOptions()
-                            .center(new LatLng(latLng.latitude, latLng.longitude))
-                            .radius(1000).strokeWidth(2)
-                            .strokeColor(Color.BLUE)
-                            .fillColor(0x3f0000ff));
-
-                    loadNearCars();
                 }
                 else {
-                    Toast.makeText(getContext(), task.getException()+"", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), task.getException()+"", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -226,7 +231,7 @@ public class ClientMapFragment extends Fragment {
             case REQUEST_CODE : {
                 if(grantResults.length>0 ) {
                     if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                        fetchLastLocation();
+                        //fetchLastLocation();
                     }
                 }
                 break ;

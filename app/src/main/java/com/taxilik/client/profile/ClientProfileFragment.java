@@ -62,7 +62,7 @@ public class ClientProfileFragment extends Fragment {
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(),ClientProfileFragmentEdit.class);
+                Intent intent=new Intent(getContext(), EditClientProfileActivity.class);
                 startActivity(intent);
             }
         });

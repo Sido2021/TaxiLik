@@ -110,25 +110,6 @@ public class DriverRequestFragment extends Fragment {
     }
 
     private void getRequests() {
-        /*db.collection("OnlineOrder").whereEqualTo("CarID", 1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        int cd = Integer.parseInt(document.getLong("ClientID").toString());
-                        ids=ids.concat(""+cd);
-                        ids=ids.concat(",");
-                    }
-                    if(!ids.equals("")){
-                        ids = ids.substring(0,ids.length()-1);
-                        loadRequests();
-                    }
-                    else pdDialog.dismiss();
-                } else {
-                    pdDialog.dismiss();
-                }
-            }
-        });*/
 
         db.collection("OnlineOrder").whereEqualTo("CarID", 1).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

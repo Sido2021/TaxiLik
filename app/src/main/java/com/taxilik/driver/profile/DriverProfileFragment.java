@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
-import com.taxilik.client.profile.ClientProfileFragmentEdit;
+import com.taxilik.client.profile.EditClientProfileActivity;
 
 import static com.taxilik.Data.CurrentUser;
 
@@ -64,7 +64,7 @@ public class DriverProfileFragment extends Fragment {
         edit_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getContext(), ClientProfileFragmentEdit.class);
+                Intent intent=new Intent(getContext(), EditClientProfileActivity.class);
                 startActivity(intent);
             }
         });

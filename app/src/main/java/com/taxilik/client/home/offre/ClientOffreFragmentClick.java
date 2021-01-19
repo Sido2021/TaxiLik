@@ -1,7 +1,11 @@
 package com.taxilik.client.home.offre;
 
+import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,39 +13,58 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CircleOptions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.taxilik.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ClientOffreFragmentClick#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ClientOffreFragmentClick extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    GoogleMap map ;
+    Location currentLocation ;
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
     TextView drivername,matVoiture;
     String chauffeur,mat;
 
-    public ClientOffreFragmentClick() {
-        // Required empty public constructor
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
+
+        @Override
+        public void onMapReady(GoogleMap googleMap) {
+            map = googleMap;
+            createTestLocation();
+        }
+    };
+    private void createTestLocation() {
+        /*currentLocation = new Location("");
+        currentLocation.setLatitude(34.402108422360705);
+        currentLocation.setLongitude(-2.8970004531777307);*/
+
+        LatLng latLng = new LatLng(34.402108422360705,-2.8970004531777307);
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Test Location");
+
+        map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+        map.addMarker(markerOptions);
+
+        map.addCircle(new CircleOptions()
+                .center(new LatLng(latLng.latitude, latLng.longitude))
+                .radius(1000).strokeWidth(2)
+                .strokeColor(Color.BLUE)
+                .fillColor(0x3f0000ff));
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ClientOffreFragmentClick.
-     */
-    // TODO: Rename and change types and number of parameters
+    public ClientOffreFragmentClick() {}
+
     public static ClientOffreFragmentClick newInstance(String param1, String param2) {
         ClientOffreFragmentClick fragment = new ClientOffreFragmentClick();
         Bundle args = new Bundle();
@@ -60,8 +83,7 @@ public class ClientOffreFragmentClick extends Fragment {
             //chaimae
 
            chauffeur = getArguments().getString("Chauffeurname");
-            mat = getArguments().getString("matricule");
-
+           mat = getArguments().getString("matricule");
 
         }
     }
@@ -75,7 +97,14 @@ public class ClientOffreFragmentClick extends Fragment {
         matVoiture = v.findViewById(R.id.matVoi);
         drivername.setText(chauffeur);
         matVoiture.setText(mat);
+
       //  return inflater.inflate(R.layout.fragment_client_offre_click, container, false);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        MapView mapView = view.findViewById(R.id.mapView);
+        mapView.getMapAsync(callback);
     }
 }

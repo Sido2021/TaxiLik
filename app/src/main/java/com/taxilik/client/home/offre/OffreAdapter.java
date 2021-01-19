@@ -45,9 +45,6 @@ public class OffreAdapter extends BaseAdapter {
 
     FirebaseFirestore db ;
 
-
-    public OffreAdapter(Context context, ArrayList<Car> carsList) {
-    //chaimae
     private Fragment fragment;
 
 

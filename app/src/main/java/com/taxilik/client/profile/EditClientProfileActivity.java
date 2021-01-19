@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 import com.taxilik.R;
 
 import org.json.JSONObject;
@@ -24,9 +26,14 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ClientProfileFragmentEdit extends AppCompatActivity {
+import static com.taxilik.Data.CurrentUser;
+
+public class EditClientProfileActivity extends AppCompatActivity {
     Button update;
     TextView fullname_field2,username_field2;
+    TextView fullname_field,username_field ;
+
+    ImageView userPofile ;
     TextInputEditText fname_profile,lname_profile,email_profile,phone_profile;
     String fname,lname,email,phone;
     String URL_UPDATE= "https://.000webhostapp.com/ ....";
@@ -35,10 +42,17 @@ public class ClientProfileFragmentEdit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.client_profile_edit_fragment);
+
+
+        fullname_field=findViewById(R.id.fullname_field);
+        username_field=findViewById(R.id.username_field);
         fname_profile=findViewById(R.id.fname_profile);
         lname_profile=findViewById(R.id.lname_profile);
         email_profile=findViewById(R.id.email_profile);
         phone_profile=findViewById(R.id.phone_profile);
+        userPofile = findViewById(R.id.profile_image);
+        loadInformation();
+
         update=findViewById(R.id.update);
         update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,7 +65,7 @@ public class ClientProfileFragmentEdit extends AppCompatActivity {
                 if(email.isEmpty()||fname.isEmpty()||lname.isEmpty()||
                         phone.isEmpty())
                 {
-                    Toast.makeText(ClientProfileFragmentEdit.this,"please enter valid data",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(EditClientProfileActivity.this,"please enter valid data",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Update();
@@ -75,7 +89,7 @@ public class ClientProfileFragmentEdit extends AppCompatActivity {
                             if(success.equals("1")){
                                 Toast.makeText(getApplicationContext(),"your data are updated",Toast.LENGTH_LONG).show();
 
-                                Intent login = new Intent(ClientProfileFragmentEdit.this, ClientProfileFragment.class);
+                                Intent login = new Intent(EditClientProfileActivity.this, ClientProfileFragment.class);
                                 startActivity(login);
                                 finish();
                             }
@@ -111,4 +125,14 @@ public class ClientProfileFragmentEdit extends AppCompatActivity {
         requestQueue.add(stringRequest);
     }
 
+    private void loadInformation(){
+        fullname_field.setText(CurrentUser.getFirstName().concat(" "+CurrentUser.getLastName()));
+        username_field.setText(CurrentUser.getFirstName().concat("_"+CurrentUser.getLastName()+"@"));
+
+        fname_profile.setText(CurrentUser.getFirstName());
+        lname_profile.setText(CurrentUser.getLastName());
+        email_profile.setText(CurrentUser.getEmail());
+        phone_profile.setText(CurrentUser.getPhone());
+        Picasso.get().load(CurrentUser.getImage()).into(userPofile);
+    }
 }

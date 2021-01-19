@@ -19,19 +19,27 @@
                 android:layout_height="300dp"
                 android:background="#fece2f"
                 android:padding="20dp">
-                <ImageView
-                    android:id="@+id/profile_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/profile_image" />
+                <androidx.cardview.widget.CardView
+                android:id="@+id/card_view_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                app:cardBackgroundColor="@android:color/white"
+                app:cardCornerRadius="50dp">
+                    <ImageView
+                        android:id="@+id/profile_image"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ic_profile" />
+                </androidx.cardview.widget.CardView>
                 <TextView
-                    android:id="@+id/fullname_field2"
+                    android:id="@+id/fullname_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/profile_image"
+                    android:layout_toRightOf="@+id/card_view_profile"
                     android:fontFamily="@font/bungee"
                     android:includeFontPadding="false"
                     android:text="MEROUANE YASSINE"
@@ -39,12 +47,12 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/username_field2"
+                    android:id="@+id/username_field"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/fullname_field2"
+                    android:layout_below="@id/fullname_field"
                     android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/profile_image"
+                    android:layout_toRightOf="@+id/card_view_profile"
                     android:includeFontPadding="false"
                     android:text=" @ mero_yassine"
                     android:textSize="14sp" />
