@@ -1,6 +1,7 @@
 package com.taxilik.client.home.offre;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +31,7 @@ import com.taxilik.ClientActivity;
 import com.taxilik.R;
 import com.taxilik.client.home.ClientHomeFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
+import com.taxilik.client.home.ClientHomeFragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,9 +47,15 @@ public class OffreAdapter extends BaseAdapter {
 
 
     public OffreAdapter(Context context, ArrayList<Car> carsList) {
+    //chaimae
+    private Fragment fragment;
+
+
+    public OffreAdapter(Context context,  ArrayList<Car> carsList,Fragment fragment) {
         this.context=context;
         this.carsList=carsList;
         db = FirebaseFirestore.getInstance();
+        this.fragment=fragment;
     }
 
 
@@ -80,6 +92,7 @@ public class OffreAdapter extends BaseAdapter {
         if(carsList.get(position).isOrdred()){
             sendRequest.setVisibility(View.GONE);
             cancelRequest.setVisibility(View.VISIBLE);
+
         }
         else {
             cancelRequest.setVisibility(View.GONE);
@@ -94,6 +107,18 @@ public class OffreAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 sendRequest(carsList.get(position));
+                // chaymae
+
+                //envoyer les donnes
+                Bundle infob= new Bundle();
+                infob.putString("Chauffeurname",carsList.get(position).getDrivername());
+                infob.putString("matricule",carsList.get(position).getMatDisc());
+
+                //ok
+                  ClientHomeFragment f = (ClientHomeFragment) fragment;
+                  f.Open(infob);
+
+
             }
         });
         cancelRequest.setOnClickListener(new View.OnClickListener() {

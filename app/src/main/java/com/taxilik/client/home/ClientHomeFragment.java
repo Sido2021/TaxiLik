@@ -21,10 +21,12 @@ import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
 import com.taxilik.client.home.offre.OffreAdapter;
+import com.taxilik.client.home.offre.ClientOffreFragmentClick;
 
 public class ClientHomeFragment extends Fragment {
 
 
+    private OnFragmentInteractionListener mListener;
     FirebaseFirestore db ;
 
     public ClientHomeFragment() { }
@@ -41,6 +43,7 @@ public class ClientHomeFragment extends Fragment {
 
         return inflater.inflate(R.layout.fragment_client_home, container, false);
     }
+
 
 
 
@@ -77,6 +80,7 @@ public class ClientHomeFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
@@ -86,9 +90,22 @@ public class ClientHomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {
+        // TODO: Update argument type and name
         void messageFromParentFragment(Uri uri);
     }
+
+    // chaymae for click
+    public void Open(Bundle info){
+        Fragment childFragment;
+        childFragment=new ClientOffreFragmentClick();
+        FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
+        transaction.replace(R.id.child_fragment_container,childFragment).commit();
+        childFragment.setArguments(info);
+    }
+
+
 }
