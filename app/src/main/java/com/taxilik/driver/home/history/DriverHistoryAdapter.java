@@ -1,4 +1,4 @@
-package com.taxilik.client.home.history;
+package com.taxilik.driver.home.history;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -16,11 +16,11 @@ import com.taxilik.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class ClientHistoryAdapter extends BaseAdapter {
+public class DriverHistoryAdapter extends BaseAdapter {
     private Context context ;
     private ArrayList<History> histories;
 
-    public ClientHistoryAdapter(Context context, ArrayList<History> histories) {
+    public DriverHistoryAdapter(Context context, ArrayList<History> histories) {
         this.context = context;
         this.histories = histories;
     }
@@ -42,27 +42,21 @@ public class ClientHistoryAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        final int position = i ;
         View row;
         LayoutInflater inflater =LayoutInflater.from(context);
-        row = inflater.inflate(R.layout.layout_client_history,viewGroup,false);
+        row = inflater.inflate(R.layout.layout_driver_history,viewGroup,false);
 
-        TextView textViewDriverName = row.findViewById(R.id.client_history_driver_name);
-        TextView textViewMatricule = row.findViewById(R.id.client_history_car_matricule);
-        TextView textViewDateStart = row.findViewById(R.id.client_history_date_start);
+        TextView textViewClientName = row.findViewById(R.id.driver_history_client_name);
+        TextView textViewDateStart = row.findViewById(R.id.driver_history_date_start);
+        ImageView clientImage =  row.findViewById(R.id.driver_history_client_image);
 
-        ImageView carImage =  row.findViewById(R.id.client_history_car_image);
-        ImageView driverImage =  row.findViewById(R.id.client_history_driver_image);
-
-        textViewDriverName.setText(histories.get(i).getDriver().getFullName());
-        textViewMatricule.setText(histories.get(i).getCar().getMatricule());
+        textViewClientName.setText(histories.get(i).getClient().getFullName());
         String date ="";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
         date = simpleDateFormat.format(histories.get(i).getDateStart());
         textViewDateStart.setText(date);
 
-        Picasso.get().load(histories.get(i).getCar().getImage()).into(carImage);
-        Picasso.get().load(histories.get(i).getDriver().getImage()).into(driverImage);
+        Picasso.get().load(histories.get(i).getClient().getImage()).into(clientImage);
 
         return row;
     }

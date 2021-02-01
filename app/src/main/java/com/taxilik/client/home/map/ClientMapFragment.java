@@ -41,6 +41,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -65,7 +66,6 @@ public class ClientMapFragment extends Fragment {
 
 
     ArrayList<MarkerOptions> carsList = new ArrayList<>();
-    ArrayList<ArrayList<LatLng>> carsLocationForSimulation = new ArrayList<>();
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -73,13 +73,13 @@ public class ClientMapFragment extends Fragment {
         public void onMapReady(GoogleMap googleMap) {
             map = googleMap;
             createTestLocation();
+            googleMap.setMapStyle(
+                    MapStyleOptions.loadRawResourceStyle(
+                            getContext(), R.raw.map_style));
         }
     };
 
     private void createTestLocation() {
-        /*currentLocation = new Location("");
-        currentLocation.setLatitude(34.402108422360705);
-        currentLocation.setLongitude(-2.8970004531777307);*/
 
         LatLng latLng = new LatLng(34.402108422360705,-2.8970004531777307);
         MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Test Location");
@@ -95,9 +95,6 @@ public class ClientMapFragment extends Fragment {
 
         loadNearCars();
     }
-
-
-    Handler handler = new Handler();
 
     @Nullable
     @Override
@@ -116,6 +113,7 @@ public class ClientMapFragment extends Fragment {
             pdDialog= new ProgressDialog(getContext());
             pdDialog.setTitle("wait...");
             pdDialog.setCancelable(false);
+
             fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(getContext());
             mapFragment.getMapAsync(callback);
         }
@@ -138,22 +136,19 @@ public class ClientMapFragment extends Fragment {
                     LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
                     MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("My Location");
 
-                    //map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
+                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,15));
                     map.addMarker(markerOptions);
 
-                    /*Circle circle = map.addCircle(new CircleOptions()
+                    Circle circle = map.addCircle(new CircleOptions()
                             .center(new LatLng(latLng.latitude, latLng.longitude))
                             .radius(1000).strokeWidth(2)
                             .strokeColor(Color.BLUE)
-                            .fillColor(0x3f0000ff));*/
-
-
-                    //test location 34.402108422360705, -2.8970004531777307
+                            .fillColor(0x3f0000ff));
 
 
                 }
                 else {
-                    //Toast.makeText(getContext(), task.getException()+"", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), task.getException()+"", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -198,7 +193,6 @@ public class ClientMapFragment extends Fragment {
                             pdDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(getContext(),"Registration Error !1"+e,Toast.LENGTH_LONG).show();
                             pdDialog.dismiss();
                         }
                     }
@@ -227,14 +221,11 @@ public class ClientMapFragment extends Fragment {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode){
-            case REQUEST_CODE : {
-                if(grantResults.length>0 ) {
-                    if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
-                        //fetchLastLocation();
-                    }
+        if (requestCode == REQUEST_CODE) {
+            if (grantResults.length > 0) {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    //fetchLastLocation();
                 }
-                break ;
             }
         }
     }
@@ -247,13 +238,5 @@ public class ClientMapFragment extends Fragment {
         return BitmapDescriptorFactory.fromBitmap(bitmap);
     }
 
-    private void startListining(){
-        final Runnable r = new Runnable() {
-            public void run() {
-                loadNearCars();
-            }
-        };
-        handler.postDelayed(r, 5000);
-    }
 
 }

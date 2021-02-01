@@ -1,5 +1,6 @@
 package com.taxilik;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,7 +42,7 @@ public class LoginActivity2 extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText editTextEmail,editTextPassword;
     Button loginButton;
-    TextView registerNow;
+    TextView registerNow , forgetPassword;
     ImageView showHidePasswordImageView ;
     ProgressDialog pdDialog;
 
@@ -62,6 +63,7 @@ public class LoginActivity2 extends AppCompatActivity {
                 MODE_PRIVATE);
 
         registerNow = findViewById(R.id.text_view_register);
+        forgetPassword = findViewById(R.id.forget_password);
         editTextEmail =  findViewById(R.id.edit_text_email);
         editTextPassword = findViewById(R.id.edit_text_password);
         loginButton=findViewById(R.id.button_login);
@@ -83,6 +85,13 @@ public class LoginActivity2 extends AppCompatActivity {
             public void onClick(View v) {
                 Intent register=new Intent(LoginActivity2.this,RegisterActivity2.class);
                 startActivity(register);
+            }
+        });
+
+        forgetPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openForgetPasswordDialog();
             }
         });
 
@@ -114,6 +123,41 @@ public class LoginActivity2 extends AppCompatActivity {
                 editTextPassword.setSelection(editTextPassword.getText().length());
             }
         });
+    }
+
+    private void openForgetPasswordDialog() {
+        final Dialog d = new Dialog(this);
+        d.setContentView(R.layout.layout_forget_password);
+
+        final EditText forgetPasswordEmail = d.findViewById(R.id.forget_password_email);
+        Button buttonRestPassword = d.findViewById(R.id.button_reset_password);
+
+        buttonRestPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(forgetPasswordEmail.getText().toString())) {
+                    editTextEmail.setError("Required.");
+                } else {
+                    editTextEmail.setError(null);
+                    resetPassword(forgetPasswordEmail.getText().toString());
+                    d.dismiss();
+                }
+            }
+        });
+
+        d.show();
+    }
+
+    private void resetPassword(String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(LoginActivity2.this, "Email sent !", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
     }
 
     private void signIn(String email, String password) {

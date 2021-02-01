@@ -65,27 +65,8 @@ public class ClientHistoryFragment extends Fragment {
         listViewClientHistories = v.findViewById(R.id.list_client_histories);
 
         pdDialog= new ProgressDialog(getContext());
-        pdDialog.setTitle("Login please wait...");
+        pdDialog.setTitle("¨Please Wait...");
         pdDialog.setCancelable(false);
-
-        princip=(CheckBox) v.findViewById(R.id.checkBox);
-        /*for (int i = 0; i < boxItem.length; i++) { boxItem[i] = (CheckBox) v.findViewById(getIdByName("check_" + (i + 1))); }
-
-        princip.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    Toast.makeText(getContext(), "Elemnts va supprimer", Toast.LENGTH_SHORT).show();
-                    for (int i = 0; i < boxItem.length; i++) {boxItem[i].setVisibility(View.VISIBLE); boxItem[i].setChecked(true); }
-                }else{
-
-                    for (int i = 0; i < boxItem.length; i++) {
-                        boxItem[i].setChecked(false); }
-
-                }
-
-            }
-        });*/
 
         return v;
     }
@@ -94,20 +75,6 @@ public class ClientHistoryFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getClientHistories();
     }
-
-    /*public static int getIdByName(final String name) {
-
-        try {
-
-            final Field field = R.id.class.getDeclaredField(name);
-
-            field.setAccessible(true);
-            return field.getInt(null);
-
-        } catch (Exception ignore) {
-            return -1;
-        }
-    }*/
 
     private void getClientHistories(){
         pdDialog.show();
@@ -126,13 +93,18 @@ public class ClientHistoryFragment extends Fragment {
                                     JSONObject history = histories.getJSONObject(i);
 
                                     int requestId = history.getInt("request_id");
+
                                     int carId = history.getInt("car_id");
+                                    String matricule = history.getString("matricule");
+                                    String carImage = history.getString("car_image");
+                                    double latitude = history.getDouble("latitude");
+                                    double longitude = history.getDouble("longitude");
+
                                     int drivreId = history.getInt("driver_id");
                                     String firstName = history.getString("first_name");
                                     String lastName = history.getString("last_name");
                                     String phone = history.getString("phone");
                                     String image = history.getString("image");
-
 
                                     Date dateStart = null;
                                     Date dateEnd = null;
@@ -147,7 +119,7 @@ public class ClientHistoryFragment extends Fragment {
                                     }
 
                                     User driver = new User(drivreId,firstName,lastName,phone,image,2,"");
-                                    Car car = new Car(carId,"","","");
+                                    Car car = new Car(carId,latitude,longitude,carImage,null,matricule);
 
                                     History h = new History(requestId,car,dateStart,dateEnd,driver,null);
                                     listHistories.add(h);
@@ -157,6 +129,7 @@ public class ClientHistoryFragment extends Fragment {
                             }
                             pdDialog.dismiss();
                         } catch (Exception e) {
+                            Log.e("error",e.getMessage());
                             e.printStackTrace();
                             pdDialog.dismiss();
                         }

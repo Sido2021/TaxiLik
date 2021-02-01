@@ -14,9 +14,9 @@
         android:roundIcon="@drawable/icon2"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DriverActivity"></activity>
-        <activity android:name=".client.profile.EditClientProfileActivity"></activity>
-
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".DriverActivity" />
+        <activity android:name=".client.profile.EditClientProfileActivity" />
         <activity
             android:name=".ClientActivity"
             android:label="@string/title_activity_client"

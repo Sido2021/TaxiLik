@@ -20,8 +20,7 @@
   
     <item
         android:id="@+id/search"
-        android:icon="@drawable/ic_search_black_24dp"
-        android:title="Search"
+        android:icon="@drawable/ic_search"
         app:showAsAction="always"
-        app:actionViewClass="android.widget.SearchView" />
+        android:title="TODO" />
 </menu>

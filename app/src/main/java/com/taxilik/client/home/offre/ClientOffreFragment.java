@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -35,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.taxilik.Car;
 import com.taxilik.Data;
 import com.taxilik.R;
+import com.taxilik.User;
 import com.taxilik.client.home.ClientHomeFragment;
 
 import org.jetbrains.annotations.NotNull;
@@ -126,12 +128,27 @@ public class ClientOffreFragment extends Fragment {
                                 for (int i =0;i<carsArray.length();i++){
                                     JSONObject car = carsArray.getJSONObject(i);
                                     if(Double.parseDouble(car.getString("distance")) <1) {
-                                        Car c = new Car(Integer.parseInt(car.getString("car_id")), "", car.getString("driver_name"), "");
+
+                                        int userId = car.getInt("driver_id");
+                                        String firstName = car.getString("first_name");
+                                        String lastName = car.getString("last_name");
+                                        String phone = car.getString("phone");
+                                        String image = car.getString("driver_image");
+                                        int type = car.getInt("type");
+
+                                        User driver = new User(userId,firstName,lastName,phone,image,type,"");
+
+                                        int carId = car.getInt("car_id");
+                                        String carImage = car.getString("car_image");
+                                        String carMatricule = car.getString("matricule");
+                                        double latitude = car.getDouble("latitude");
+                                        double longitude = car.getDouble("longitude");
+
+                                        Car c = new Car(carId,latitude,longitude, carImage,driver,carMatricule );
                                         c.setOrdred(ordredCarsID.contains((long)Integer.parseInt(car.getString("car_id"))));
                                         carsList.add(c);
                                     }
                                 }
-//chaimae
                                 OffreAdapter adapter=new OffreAdapter(getContext(),carsList,getParentFragment());
                                 listTaxi.setAdapter(adapter);
                                 pdDialog.dismiss();

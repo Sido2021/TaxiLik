@@ -45,7 +45,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background_white_transparent"
+        android:background="@drawable/background_selver_transparent"
         android:gravity="center"
         android:orientation="vertical"
         android:paddingLeft="4dp"
@@ -137,7 +137,7 @@
             android:text="Login" />
 
         <TextView
-            android:id="@+id/reset_password"
+            android:id="@+id/forget_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
@@ -155,7 +155,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
-        android:background="@drawable/background_white_transparent"
+        android:background="@drawable/background_selver_transparent"
         android:gravity="center"
         android:padding="8dp"
         android:text="Sign up"

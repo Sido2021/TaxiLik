@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,9 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.taxilik.R;
 import com.taxilik.client.home.history.ClientHistoryFragment;
 import com.taxilik.client.home.map.ClientMapFragment;
+import com.taxilik.client.home.offre.CarProfileFragment;
 import com.taxilik.client.home.offre.ClientOffreFragment;
-import com.taxilik.client.home.offre.OffreAdapter;
-import com.taxilik.client.home.offre.ClientOffreFragmentClick;
 
 public class ClientHomeFragment extends Fragment {
 
@@ -94,17 +94,13 @@ public class ClientHomeFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void messageFromParentFragment(Uri uri);
     }
 
-    // chaymae for click
     public void Open(Bundle info){
-        Fragment childFragment;
-        childFragment=new ClientOffreFragmentClick();
-        FragmentTransaction transaction=getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.child_fragment_container,childFragment).commit();
+        DialogFragment childFragment = new  CarProfileFragment();
         childFragment.setArguments(info);
+        childFragment.show(getChildFragmentManager(), "");
     }
 
 

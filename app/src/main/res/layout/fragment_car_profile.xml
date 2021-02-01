@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/white"
+    tools:context=".client.home.offre.CarProfileFragment">
+
+    <LinearLayout
+        android:id="@+id/info_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="4">
+            <fragment
+                android:id="@+id/mapView"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".client.home.map.ClientMapFragment" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:layout_weight="5">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Temps :" />
+
+                    <TextView
+                        android:id="@+id/car_profile_time"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="15 min" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/car_profile_distance"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="15Km" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Couts:" />
+
+                    <TextView
+                        android:id="@+id/car_profile_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="24 dh" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/car_profile_car_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:src="@drawable/search_image_car"
+                        android:scaleType="centerCrop"
+                        android:contentDescription="IMG"
+                        tools:ignore="HardcodedText"/>
+
+                    <TextView
+                        android:id="@+id/car_profile_driver_name"
+                        android:layout_width="match_parent"
+                        android:paddingStart="70dp"
+                        android:paddingEnd="0dp"
+                        android:text="user name"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/white"
+                        android:layout_below="@id/car_profile_car_image"
+                        android:gravity="center_vertical"
+                        android:layout_height="wrap_content"
+                        android:minHeight="40dp"
+                        android:background="@color/colorAccent"
+                        tools:ignore="HardcodedText" />
+                    <TextView
+                        android:id="@+id/car_profile_car_matricule"
+                        android:layout_width="wrap_content"
+                        android:text="Mat :"
+                        android:textStyle="bold"
+                        android:layout_above="@id/car_profile_driver_name"
+                        android:layout_alignParentEnd="true"
+                        android:layout_height="wrap_content"
+                        android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingBottom="2dp"
+                        android:layout_margin="4dp"
+                        android:paddingTop="2dp"
+                        android:background="@drawable/background_text_white"
+                        tools:ignore="HardcodedText" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/card_view_profile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_margin="4dp"
+                        android:translationY="30dp"
+                        app:cardBackgroundColor="@android:color/white"
+                        android:layout_alignBottom="@id/car_profile_car_image"
+                        app:cardCornerRadius="30dp">
+                        <ImageView
+                            android:id="@+id/car_profile_driver_image"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:src="@drawable/ic_profile"
+                            android:contentDescription="IMG"
+                            android:scaleType="centerCrop"
+                            tools:ignore="HardcodedText" />
+                    </androidx.cardview.widget.CardView>
+
+                </RelativeLayout>
+
+                <Button
+                    android:layout_width="58dp"
+                    android:textSize="12dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="#2E9AFE"
+                    android:text="Demande"
+
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:layout_alignBottom="@+id/info_container"
+        android:gravity="center_horizontal">
+        <Button
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:id="@+id/car_profile_show_hide_feedback"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:textSize="12sp"
+            android:text="Show Feedback"/>
+        <LinearLayout
+            android:id="@+id/car_profile_layout_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="gone">
+        <ListView
+            android:id="@+id/car_profile_list_view_feedback"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_margin="4dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp"
+                android:background="@drawable/background_text_white"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_comment"
+                    android:padding="4dp"/>
+
+                <EditText
+                    android:id="@+id/car_profile_edit_text_feedback"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:background="@android:color/transparent"
+                    android:hint="Email"
+                    android:padding="8dp" />
+                <ImageView
+                    android:id="@+id/car_profile_send_feedback"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_send"
+                    android:padding="4dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

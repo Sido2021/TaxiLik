@@ -9,12 +9,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
     <!--style name="AppTheme2" parent="Theme.AppCompat.Light.DarkActionBar"-->
-    <style name="AppTheme2" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorAccent</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-    </style>
     <style name="ButtonGreen" parent="Widget.AppCompat.Button.Colored">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/Green</item>
@@ -25,6 +19,11 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/Red</item>
         <item name="colorAccent">@color/Red</item>
+    </style>
+
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
     </style>
 
 </resources>

@@ -90,7 +90,6 @@ public class DriverRequestFragment extends Fragment {
         clientsMap = new HashMap<>();
         requestAdapter = new RequestAdapter(getContext(),clients);
         listViewRequests.setAdapter(requestAdapter);
-        pdDialog.show();
         getRequests();
     }
 
@@ -111,6 +110,7 @@ public class DriverRequestFragment extends Fragment {
 
     private void getRequests() {
 
+        pdDialog.show();
         db.collection("OnlineOrder").whereEqualTo("CarID", 1).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot snapshots,

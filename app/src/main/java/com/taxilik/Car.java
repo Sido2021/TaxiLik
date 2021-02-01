@@ -1,60 +1,39 @@
 package com.taxilik;
 
-import android.widget.Toast;
+import java.io.Serializable;
 
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-public class Car {
+public class Car implements Serializable {
     private int carID ;
     private String image;
-    private String drivername;
-    private String matDisc;
+    private User driver;
+    private String matricule;
+    private double latitude , longitude ;
     private boolean ordred = false ;
 
 
-    public Car(int carID , String image, String drivername, String matDisc){
+    public Car(int carID , double latitude , double longitude, String image, User driver, String matricule){
         this.carID = carID ;
-        this.drivername=drivername;
+        this.driver=driver;
         this.image=image;
-        this.matDisc=matDisc;
+        this.matricule=matricule;
+        this.latitude = latitude ;
+        this.longitude = longitude;
     }
 
     public int getCarID() {
         return carID;
     }
 
-    public void setCarID(int carID) {
-        this.carID = carID;
-    }
-
     public String getImage() {
         return image;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public User getDriver() {
+        return driver;
     }
 
-    public String getDrivername() {
-        return drivername;
-    }
-
-    public void setDrivername(String drivername) {
-        this.drivername = drivername;
-    }
-
-    public String getMatDisc() {
-        return matDisc;
-    }
-
-    public void setMatDisc(String matDisc) {
-        this.matDisc = matDisc;
+    public String getMatricule() {
+        return matricule;
     }
 
     public boolean isOrdred() {
@@ -65,7 +44,11 @@ public class Car {
         this.ordred = ordred;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
 
-
-
+    public double getLongitude() {
+        return longitude;
+    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import com.google.android.gms.dynamic.IFragmentWrapper;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 import com.taxilik.Car;
 import com.taxilik.ClientActivity;
 import com.taxilik.R;
@@ -79,49 +81,47 @@ public class OffreAdapter extends BaseAdapter {
         LayoutInflater inflater =LayoutInflater.from(context);
         row = inflater.inflate(R.layout.car_offre_layout,parent,false);
 
+        LinearLayout container= row.findViewById(R.id.offre_layout_container);
         TextView txtName=row.findViewById(R.id.chauffxml);
         TextView txtMat= row.findViewById(R.id.matxml);
 
-        ImageView txtImage=row.findViewById(R.id.imageXML);
+        ImageView carImage=row.findViewById(R.id.imageXML);
         Button sendRequest = row.findViewById(R.id.send_request);
         Button  cancelRequest = row.findViewById(R.id.cancel_request);
 
         if(carsList.get(position).isOrdred()){
             sendRequest.setVisibility(View.GONE);
             cancelRequest.setVisibility(View.VISIBLE);
-
         }
         else {
             cancelRequest.setVisibility(View.GONE);
             sendRequest.setVisibility(View.VISIBLE);
         }
 
-        txtName.setText(carsList.get(position).getDrivername());
-        txtMat.setText(carsList.get(position).getMatDisc());
-        //txtImage.setImageResource(dra);
+        txtName.setText(carsList.get(position).getDriver().getFullName());
+        txtMat.setText(carsList.get(position).getMatricule());
+        Picasso.get().load(carsList.get(position).getImage()).into(carImage);
 
         sendRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sendRequest(carsList.get(position));
-                // chaymae
-
-                //envoyer les donnes
-                Bundle infob= new Bundle();
-                infob.putString("Chauffeurname",carsList.get(position).getDrivername());
-                infob.putString("matricule",carsList.get(position).getMatDisc());
-
-                //ok
-                  ClientHomeFragment f = (ClientHomeFragment) fragment;
-                  f.Open(infob);
-
-
             }
         });
         cancelRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 cancelRequest(carsList.get(position));
+            }
+        });
+
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle= new Bundle();
+                bundle.putSerializable("car",carsList.get(position));
+                ClientHomeFragment f = (ClientHomeFragment) fragment;
+                f.Open(bundle);
             }
         });
 
@@ -147,7 +147,7 @@ public class OffreAdapter extends BaseAdapter {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("gg",e.getMessage());
+                       //error
                     }
                 });
 
@@ -166,10 +166,14 @@ public class OffreAdapter extends BaseAdapter {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("gg",e.getMessage());
+                        //error
                     }
 
                 });
+    }
+
+    private void loadCarProfile(){
+
     }
 
 }

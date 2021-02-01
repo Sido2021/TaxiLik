@@ -6,25 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".client.home.offre.ClientOffreFragment">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <FrameLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/companyIcon"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitStart"
                 android:src="@drawable/headerpic" />
-
-        </FrameLayout>
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -39,9 +36,8 @@
 
                 <Button
                     android:id="@+id/button2"
-                    android:layout_width="195dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:background="@color/white"
                     android:text="TAXI"
                     android:textColor="@color/OrandeTaxi" />
@@ -50,7 +46,6 @@
                     android:id="@+id/divider"
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
-                    android:layout_weight="2"
                     android:background="@color/OrandeTaxi"
                     />
             </LinearLayout>
@@ -63,9 +58,8 @@
 
                 <Button
                     android:id="@+id/button"
-                    android:layout_width="216dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:background="@color/white"
                     android:text="VIP" />
 
@@ -73,7 +67,6 @@
                     android:id="@+id/divider4"
                     android:layout_width="match_parent"
                     android:layout_height="4dp"
-                    android:layout_weight="2"
                     android:background="?android:attr/listDivider" />
 
             </LinearLayout>
